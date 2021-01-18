@@ -1,0 +1,70 @@
+@charset "utf-8";
+body {
+    width:900px;
+    margin:20px auto;  /*←上下マージン20px、左右はautoでセンター合わせに*/
+}
+header, nav, article, aside, section, footer {
+    display:block;  /*←新要素はデフォルトではinline要素なのでこの指定が必要。*/
+}
+header, nav, article, aside, section, footer {
+    border:1px solid #ccc;  /*←各ブロックに枠線をつけてわかりやすくしました。*/
+    margin:0px 0px 10px;
+    padding:20px;
+}
+header {
+    text-align:center;
+}
+nav {
+    text-align:center;
+    padding:5px;
+    }
+nav ul, nav li {
+    list-style-type:none;
+    display:inline;  /*←display:inlineでli要素を横並びに。*/
+    padding:0px 10px;
+}
+nav h1 {
+    display:none;  /*←display:noneで非表示にする。CSSが無効の時は見える。*/
+}
+article {
+    float:left;  /*←article（メインブロック）はfloat:leftで左寄せに。*/
+    width:620px;
+}
+aside {
+    float:right;  /*←aside（サイドバー）はfloat:rightで右寄せに。*/
+    width:180px;
+}
+footer {
+    clear:both;  /*←articleとasideのfloatを、これでクリア。*/
+    text-align: center;
+    padding: 5px;
+    font-size: 80%;
+}
+
+
+/*--マークダウン用------------------------------*/
+table  { border-collapse: collapse; }
+th, td { border:1px solid #999; padding:2px 5px; }
+th     { background:#e0e0e0; }
+
+
+.title{
+    font-size: 2.5rem;
+	background:linear-gradient(transparent 80%, #999 0%);
+}
+.time{
+    font-size: 1.2rem;
+    margin-left: 3rem;
+}
+.profile{
+    width: 100%;
+    height: 100%;
+}
+.sns{
+    width: 30%;
+}
+.sns_text{
+    margin: 0;
+    margin-top: 7px !important;
+    padding: 0;
+}
