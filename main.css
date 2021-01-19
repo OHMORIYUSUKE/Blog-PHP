@@ -5,6 +5,10 @@ h1{
     padding: 1.3px !important;
 }
 
+.inline-block_test {
+    display: inline-block;      /* インラインブロック要素にする */
+}
+
 body {
     width:900px;
     margin:20px auto;  /*←上下マージン20px、左右はautoでセンター合わせに*/
@@ -59,6 +63,12 @@ th     { background:#e0e0e0; }
     background:linear-gradient(transparent 95%, #999 0%);
     margin: 0 !important;
     padding: 0 !important;
+}
+/*ブログタイトル(まとめページ)*/
+.view_title{
+    text-decoration: none !important;
+    color: black;
+    padding: 0px !important;
 }
 /*投稿時間*/
 .time{
