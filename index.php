@@ -75,6 +75,9 @@
     <article>
         <section>
 <?php 
+$tag = 'プログラミング';
+$tag = '#'.$tag; 
+
 $title = 'C言語は難しい';
 
 $time = '2021-01-18 14:07:33';
@@ -180,12 +183,16 @@ void main(){
 ';
 ?>
 <div>
-<?php //タイトル 
+<?php //タイトル.投稿時刻.タグ
 //サニタイジング
 $title = str_replace("<script>", "＜script＞", $title,$n);
 $title = str_replace("</script>", "＜/script＞", $title,$n);
+$tag = str_replace("<script>", "＜script＞", $tag,$n);
+$tag = str_replace("</script>", "＜/script＞", $tag,$n);
 ?>
-<h1 class="title"><?php print($title); ?><span class="time"><?php print($time); ?></span></h1>
+<p class="time"><?php print($time); ?></p>
+<h1 class="title"><?php print($title); ?></h1>
+<p class="tag"><?php print($tag); ?></p>
 <?php //内容
 //サニタイジング
 $text = str_replace("<script>", "＜script＞", $text,$n);
@@ -206,6 +213,13 @@ print($text);
         <a href="https://github.com/OHMORIYUSUKE"><img class="sns" src="images/github.png" alt="画像"></a>
         <a href="mailto:b2190350@photon.chitose.ac.jp"><img class="sns" src="images/gmail.png" alt="画像"></a>
     </section>
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <form method="get" action="#" class="search_container">
+    <input type="text" size="16" placeholder="　キーワード検索"><input type="submit" value="&#xf002">
+    </form>
+
     <section>
     <h1>カテゴリー</h1>
         <ul>
@@ -217,13 +231,13 @@ print($text);
         </ul>
     </section>
     <section>
-    <h1>アーカイブ</h1>
+    <h1>最新記事</h1>
         <ul>
-            <li><a href="#">アーカイブ1</a></li>
-            <li><a href="#">アーカイブ2</a></li>
-            <li><a href="#">アーカイブ3</a></li>
-            <li><a href="#">アーカイブ4</a></li>
-            <li><a href="#">アーカイブ5</a></li>
+            <li><a href="#">最新記事1</a></li>
+            <li><a href="#">最新記事2</a></li>
+            <li><a href="#">最新記事3</a></li>
+            <li><a href="#">最新記事4</a></li>
+            <li><a href="#">最新記事5</a></li>
         </ul>
     </section>
     </aside>

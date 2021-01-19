@@ -47,24 +47,65 @@ table  { border-collapse: collapse; }
 th, td { border:1px solid #999; padding:2px 5px; }
 th     { background:#e0e0e0; }
 
-
+/*ブログタイトル*/
 .title{
-    font-size: 2.5rem;
-	background:linear-gradient(transparent 80%, #999 0%);
+    font-size: 2.2rem;
+    background:linear-gradient(transparent 95%, #999 0%);
+    margin: 0 !important;
+    padding: 0 !important;
 }
+/*投稿時間*/
 .time{
-    font-size: 1.2rem;
-    margin-left: 3rem;
+    font-size: 0.9rem;
+    text-align: right;
+    margin: 0 !important;
+    padding: 0 !important;
 }
+/*投稿タグ*/
+.tag{
+    font-size: 0.9rem;
+    text-align: right;
+    margin: 0 !important;
+    padding: 1.3px !important;
+    border: solid 1px #999;
+    display: inline-block;
+}
+/*プロフィール画像*/
 .profile{
     width: 100%;
     height: 100%;
 }
+/*SNS画像(アイコン)*/
 .sns{
     width: 30%;
 }
+/*SNSの文字*/
 .sns_text{
     margin: 0;
     margin-top: 7px !important;
     padding: 0;
 }
+
+/*検索ボックス*/
+.search_container{
+    box-sizing: border-box;
+    padding-bottom: 10px;
+  }
+  .search_container input[type="text"]{
+    background: #ccddf5;
+    border: none;
+    height: 35px;
+  }
+  .search_container input[type="text"]:focus {
+    outline: 0;
+  }
+  .search_container input[type="submit"]{
+    cursor: pointer;
+    font-family: FontAwesome;
+    border: none;
+    background: #3879D9;
+    color: #fff;
+    outline : none;
+    width: 3.0em;
+    height: 37px;
+  }
