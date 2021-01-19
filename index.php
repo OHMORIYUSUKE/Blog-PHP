@@ -22,7 +22,7 @@
         
     </head>
     <body>
-    <!-- ---------------------------------js---------------------------------- -->
+    <!-- ---------------------------------mdをHTMLに変換---------------------------------- -->
     <script>
     $(function() {
 
@@ -183,6 +183,7 @@ void main(){
 ';
 ?>
 <div>
+
 <?php //タイトル.投稿時刻.タグ
 //サニタイジング
 $title = str_replace("<script>", "＜script＞", $title,$n);
@@ -192,7 +193,8 @@ $tag = str_replace("</script>", "＜/script＞", $tag,$n);
 ?>
 <p class="time"><?php print($time); ?></p>
 <h1 class="title"><?php print($title); ?></h1>
-<p class="tag"><?php print($tag); ?></p>
+<a href="#" class="tag"><?php print($tag); ?></a>
+
 <?php //内容
 //サニタイジング
 $text = str_replace("<script>", "＜script＞", $text,$n);
@@ -208,12 +210,14 @@ print($text);
     <h1>プロフィール</h1>
         <img  class="profile" src="images/profile.jpg" alt="画像">
         <a href="http://utan.php.xdomain.jp/profile.html">うーたん</a>
+        <!-- <img src="images/external_link.png" alt="画像" width="14%"> -->
         <p class="sns_text">SNS</p>
         <a href="https://twitter.com/u____tan_"><img class="sns" src="images/twitter.png" alt="画像"></a>
         <a href="https://github.com/OHMORIYUSUKE"><img class="sns" src="images/github.png" alt="画像"></a>
         <a href="mailto:b2190350@photon.chitose.ac.jp"><img class="sns" src="images/gmail.png" alt="画像"></a>
     </section>
 
+    <!-- 検索ボックス -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <form method="get" action="#" class="search_container">

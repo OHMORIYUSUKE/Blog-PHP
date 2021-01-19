@@ -1,4 +1,10 @@
 @charset "utf-8";
+/*h1リセット*/
+h1{
+    margin: 0 !important;
+    padding: 1.3px !important;
+}
+
 body {
     width:900px;
     margin:20px auto;  /*←上下マージン20px、左右はautoでセンター合わせに*/
@@ -69,6 +75,9 @@ th     { background:#e0e0e0; }
     padding: 1.3px !important;
     border: solid 1px #999;
     display: inline-block;
+    border-radius: 3px;
+    text-decoration: none;
+    color: black;
 }
 /*プロフィール画像*/
 .profile{
