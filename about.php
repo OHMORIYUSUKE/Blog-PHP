@@ -1,22 +1,3 @@
-<?php
-error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
-?>
-
-<?php
-require('dbconnect.php');
-// //URLパラメータを指定せずにアクセスしようとした場合はheader('Location: index.php');
-// if(empty($_REQUEST['id'])){
-//   header('Location: index.php');
-//   exit();
-// }
-
-$posts = $db->prepare('SELECT * FROM article WHERE id=?');
-$posts->execute(array(
-  $_REQUEST['id']
-));
-$post = $posts->fetch();
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -94,12 +75,12 @@ $post = $posts->fetch();
     <article>
         <section>
 <?php 
-// $tag = 'プログラミング';
-// $tag = '#'.$tag; 
+$tag = '自己紹介';
+$tag = '#'.$tag; 
 
-// $title = 'C言語は難しい';
+$title = '自己紹介します。';
 
-// $created = '2021-01-18 14:07:33';
+$created = '2021-01-18 (更新)';
 
 // $text = '
 // # 目次
@@ -109,8 +90,7 @@ $post = $posts->fetch();
 // ';
 ?>
 <div>
-<!-- 指定されたURLパラメータが間違っていた場合(postはNULLである) -->
-<?php if($post): ?>
+
 <?php //タイトル.投稿時刻.タグ
 //サニタイジング
 $title = str_replace("<script>", "＜script＞", $title,$n);
@@ -119,34 +99,34 @@ $tag = str_replace("<script>", "＜script＞", $tag,$n);
 $tag = str_replace("</script>", "＜/script＞", $tag,$n);
 ?>
 
-<p class="time"><?php //print($created); 
-print(htmlspecialchars($post['created'], ENT_QUOTES)); 
-?></p>
-<h1 class="title"><?php //print($title); 
-print(htmlspecialchars($post['title'], ENT_QUOTES)); 
-?></h1>
-<a href="#" class="tag"><?php //print($tag); 
-print(htmlspecialchars($post['tag'], ENT_QUOTES)); 
-?></a>
+<p class="time"><?php print($created); ?></p>
+<h1 class="title"><?php print($title); ?></h1>
+<a href="#" class="tag"><?php print($tag); ?></a>
 
 <?php //内容
-//サニタイジング
-$text = str_replace("<script>", "＜script＞", $text,$n);
-$text = str_replace("</script>", "＜/script＞", $text,$n);
+//print($text);
 
-//print($text); 
-print(htmlspecialchars($post['text'], ENT_QUOTES)); 
+// ファイルを変数に格納
+$filename = 'about.md';
+ 
+// fopenでファイルを開く（'r'は読み込みモードで開く）
+$fp = fopen($filename, 'r');
+ 
+// whileで行末までループ処理
+while (!feof($fp)) {
+ 
+  // fgetsでファイルを読み込み、変数に格納
+  $text = fgets($fp);
+
+  // ファイルを読み込んだ変数を出力
+  print( $text);
+ 
+}
+ 
+// fcloseでファイルを閉じる
+fclose($fp);
 ?>
-<?php else: ?>
-```C
-<p>その投稿は削除されたか、URLが間違えています。</p>
 
- ∧＿∧
-(´･ω･) みなさん、お茶が入りましたよ・・・。
-( つ旦O
-と＿)＿) 旦旦旦旦旦旦旦旦旦旦旦旦旦旦旦旦旦旦旦旦
-```
-<?php endif; ?>
 </div>
 <br>
 <p>&laquo; <a href="index.php">メインページへ</a></p>           
@@ -163,15 +143,6 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
         <a href="https://github.com/OHMORIYUSUKE"><img class="sns" src="images/github.png" alt="画像"></a>
         <a href="mailto:b2190350@photon.chitose.ac.jp"><img class="sns" src="images/gmail.png" alt="画像"></a>
     </section>
-
-    <!-- 検索ボックス -->
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <form method="get" class="search_container">
-    <input type="text" name="search" size="16" placeholder="　キーワード検索"><input type="submit" value="&#xf002">
-    </form>
-    <!-- 検索ボックスに入力された文字を取得 -->
-    <?php $search = htmlspecialchars($_POST['search'],ENT_QUOTES); ?>
 
     <section>
     <h1>カテゴリー</h1>

@@ -5,7 +5,7 @@ h1{
     padding: 1.3px !important;
 }
 
-.inline-block_test {
+.inline-block {
     display: inline-block;      /* インラインブロック要素にする */
 }
 

@@ -4,9 +4,30 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 
 <?php
 require('dbconnect.php');
+
+//URLパラメータで渡ってきたpage
+$page = $_REQUEST['page'];
+//URLパラメータで渡ってきたpageがnullだったら
+if($page == ''){
+  $page = 1;
+}
+//$pageが1より小さかったら$page=1
+$page = max($page,1);
+
+//dbからコメントの総数を取る
+$counts = $db->query('SELECT COUNT(*) AS cnt FROM article');
+$cnt = $counts->fetch(); //SQLたたいたらfetch()する
+$maxPage = ceil($cnt['cnt'] / 6); //切り上げ
+$page = min($page,$maxPage); //$page>$maxPageだったら $page = $maxPage
+
+//ページネーションの計算
+$start = ($page - 1)*6;
 //データベースから取得
-$posts = $db->prepare('SELECT * FROM article ORDER BY created DESC');
+$posts = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT ?,6');
+//LIMIT ?,5の?に入るのはint型ではないといけないので型指定できるbindParam(1, $start, PDO::PARAM_INT)を使う
+$posts->bindParam(1, $start, PDO::PARAM_INT);
 $posts->execute();
+
 ?>
 
 <!DOCTYPE html>
@@ -27,36 +48,46 @@ $posts->execute();
 <nav>
 <h1>グローバルナビゲーション</h1>
 <ul>
-<li><a href="#">HOME</a></li>
-<li><a href="#">MENU1</a></li>
-<li><a href="#">MENU2</a></li>
-<li><a href="#">MENU3</a></li>
-<li><a href="#">SITE MAP</a></li>
-<li><a href="#">ABOUT</a></li>
+<li><a href="index.php">HOME</a></li>
+<li><a href="#">     </a></li>
+<li><a href="#">     </a></li>
+<li><a href="#">     </a></li>
+<li><a href="#">     </a></li>
+<li><a href="about.php">ABOUT</a></li>
 </ul>
 </nav>
 <article>
 <?php foreach($posts as $post): ?>
     <section>
-    <div class="inline-block_test">
         <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><h2><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></h2></a>
+      <div class="inline-block">
         <p class="time"><?php print(htmlspecialchars($post['created'], ENT_QUOTES)); ?></p>
-    </div>
-    <a href="#" class="tag"><?php print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); ?></a>
+      </div>
+      <div class="inline-block">
+        <a href="#" class="tag"><?php print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); ?></a>
+      </div>
     </section>
 <?php endforeach; ?>
 <nav aria-label="Page navigation example">
   <ul class="pagination">
+  <?php if($page > 1): ?>
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
+      <a class="page-link" href="index.php?page=<?php print($page - 1); ?>" aria-label="Previous">
         <span aria-hidden="true">&laquo; 前のページへ</span>
       </a>
     </li>
+    <?php else: ?>
+      <span aria-hidden="true">　　　　　　　</span>
+    <?php endif; ?>
+    <?php if($page < $maxPage): ?>
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
+      <a class="page-link" href="index.php?page=<?php print($page + 1); ?>" aria-label="Next">
         <span aria-hidden="true">次のページへ &raquo;</span>
       </a>
     </li>
+    <?php else: ?>
+      <span aria-hidden="true">　　　　　　　</span>
+    <?php endif; ?>
   </ul>
 </nav>
 </article>
@@ -64,7 +95,7 @@ $posts->execute();
     <section>
     <h1>プロフィール</h1>
         <img  class="profile" src="images/profile.jpg" alt="画像">
-        <a href="http://utan.php.xdomain.jp/profile.html">うーたん</a>
+        <a href="about.php">うーたん</a>
         <!-- <img src="images/external_link.png" alt="画像" width="14%"> -->
         <p class="sns_text">SNS</p>
         <a href="https://twitter.com/u____tan_"><img class="sns" src="images/twitter.png" alt="画像"></a>
@@ -75,12 +106,11 @@ $posts->execute();
     <!-- 検索ボックス -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <form method="get" action="#" class="search_container">
-    <input type="text" size="16" placeholder="　キーワード検索"><input type="submit" value="&#xf002">
+    <form method="get" class="search_container">
+    <input type="text" name="search" size="16" placeholder="　キーワード検索"><input type="submit" value="&#xf002">
     </form>
     <!-- 検索ボックスに入力された文字を取得 -->
-    <?php $search = htmlspecialchars($_GET['search'],ENT_QUOTES,"UTF-8"); ?>
-    <?php print($search); ?>
+    <?php $search = htmlspecialchars($_POST['search'],ENT_QUOTES); ?>
 
 <section>
 <h1>カテゴリー</h1>
@@ -104,7 +134,8 @@ $posts->execute();
 </section>
 </aside>
 <footer>
-Copyright ©HTML5 【 レイアウト 】 All Rights Reserved.
-</footer>
+    Copyright ©HTML5 【 レイアウト 】 All Rights Reserved.<br>
+    <a href="https://programmercollege.jp/column/1635/">レイアウト</a>
+    </footer>
 </body>
 </html>
