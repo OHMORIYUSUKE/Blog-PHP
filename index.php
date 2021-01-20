@@ -57,6 +57,7 @@ $posts->execute();
 </ul>
 </nav>
 <article>
+  <p>記事の総数：<?php print($cnt['cnt']);?></p>
 <?php foreach($posts as $post): ?>
     <section>
         <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><h2><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></h2></a>
@@ -72,8 +73,8 @@ $posts->execute();
   <ul class="pagination">
   <?php if($page > 1): ?>
     <li class="page-item">
-      <a class="page-link" href="index.php?page=<?php print($page - 1); ?>" aria-label="Previous">
-        <span aria-hidden="true">&laquo; 前のページへ</span>
+    &laquo;<a class="page-link" href="index.php?page=<?php print($page - 1); ?>" aria-label="Previous">
+        <span aria-hidden="true">前のページへ</span>
       </a>
     </li>
     <?php else: ?>
@@ -82,8 +83,8 @@ $posts->execute();
     <?php if($page < $maxPage): ?>
     <li class="page-item">
       <a class="page-link" href="index.php?page=<?php print($page + 1); ?>" aria-label="Next">
-        <span aria-hidden="true">次のページへ &raquo;</span>
-      </a>
+        <span aria-hidden="true">次のページへ</span>
+      </a>&raquo;
     </li>
     <?php else: ?>
       <span aria-hidden="true">　　　　　　　</span>
@@ -124,13 +125,15 @@ $posts->execute();
 </section>
 <section>
 <h1>最新記事</h1>
-<ul>
-<li><a href="#">最新記事1</a></li>
-<li><a href="#">最新記事2</a></li>
-<li><a href="#">最新記事3</a></li>
-<li><a href="#">最新記事4</a></li>
-<li><a href="#">最新記事5</a></li>
-</ul>
+<?php 
+$posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 1,3');
+$posts_new->execute();
+?>
+<?php foreach($posts_new as $post): ?>
+<a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></a>
+<br>
+<hr>
+<?php endforeach; ?>
 </section>
 </aside>
 <footer>

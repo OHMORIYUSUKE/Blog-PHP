@@ -1,3 +1,9 @@
+<?php
+error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
+
+require('dbconnect.php');
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -80,8 +86,6 @@ $tag = '#'.$tag;
 
 $title = '自己紹介します。';
 
-$created = '2021-01-18 (更新)';
-
 // $text = '
 // # 目次
 // 1. [C言語とは](#anchor1)
@@ -97,6 +101,13 @@ $title = str_replace("<script>", "＜script＞", $title,$n);
 $title = str_replace("</script>", "＜/script＞", $title,$n);
 $tag = str_replace("<script>", "＜script＞", $tag,$n);
 $tag = str_replace("</script>", "＜/script＞", $tag,$n);
+
+// ファイルを変数に格納
+$filename = 'about.md';
+// fopenでファイルを開く（'r'は読み込みモードで開く）
+$fp = fopen($filename, 'r');
+// fgetsでファイルを読み込み、変数に格納
+$created = fgets($fp);
 ?>
 
 <p class="time"><?php print($created); ?></p>
@@ -111,16 +122,17 @@ $filename = 'about.md';
  
 // fopenでファイルを開く（'r'は読み込みモードで開く）
 $fp = fopen($filename, 'r');
- 
+$i=0;
 // whileで行末までループ処理
 while (!feof($fp)) {
  
   // fgetsでファイルを読み込み、変数に格納
   $text = fgets($fp);
-
-  // ファイルを読み込んだ変数を出力
-  print( $text);
- 
+  if($i!==0){
+    // ファイルを読み込んだ変数を出力
+    print( $text);
+  }
+ $i+=1;
 }
  
 // fcloseでファイルを閉じる
@@ -156,13 +168,15 @@ fclose($fp);
     </section>
     <section>
     <h1>最新記事</h1>
-        <ul>
-            <li><a href="#">最新記事1</a></li>
-            <li><a href="#">最新記事2</a></li>
-            <li><a href="#">最新記事3</a></li>
-            <li><a href="#">最新記事4</a></li>
-            <li><a href="#">最新記事5</a></li>
-        </ul>
+        <?php 
+        $posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 1,3');
+        $posts_new->execute();
+        ?>
+        <?php foreach($posts_new as $post): ?>
+        <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></a>
+        <br>
+        <hr>
+        <?php endforeach; ?>
     </section>
     </aside>
     <footer>

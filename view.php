@@ -126,7 +126,7 @@ print(htmlspecialchars($post['created'], ENT_QUOTES));
 print(htmlspecialchars($post['title'], ENT_QUOTES)); 
 ?></h1>
 <a href="#" class="tag"><?php //print($tag); 
-print(htmlspecialchars($post['tag'], ENT_QUOTES)); 
+print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); 
 ?></a>
 
 <?php //内容
@@ -185,13 +185,15 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
     </section>
     <section>
     <h1>最新記事</h1>
-        <ul>
-            <li><a href="#">最新記事1</a></li>
-            <li><a href="#">最新記事2</a></li>
-            <li><a href="#">最新記事3</a></li>
-            <li><a href="#">最新記事4</a></li>
-            <li><a href="#">最新記事5</a></li>
-        </ul>
+        <?php 
+        $posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 1,3');
+        $posts_new->execute();
+        ?>
+        <?php foreach($posts_new as $post): ?>
+        <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></a>
+        <br>
+        <hr>
+        <?php endforeach; ?>
     </section>
     </aside>
     <footer>
