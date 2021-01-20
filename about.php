@@ -169,7 +169,7 @@ fclose($fp);
     <section>
     <h1>最新記事</h1>
         <?php 
-        $posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 1,3');
+        $posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,3');
         $posts_new->execute();
         ?>
         <?php foreach($posts_new as $post): ?>
