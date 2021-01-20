@@ -1,17 +1,19 @@
 <?php
-$tag = 'プログラミング';
-$tag = '#'.$tag; 
+error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
+?>
 
-$title = 'C言語は難しい';
-
-$time = '2021-01-18 14:07:33';
+<?php
+require('dbconenect.php');
+//データベースから取得
+$posts = $db->prepare('SELECT * FROM article ORDER BY created DESC');
+$posts->execute();
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<title>HTML5 【 レイアウト 】</title>
+<title>ブログ</title>
 <link rel="stylesheet" type="text/css" href="main.css" media="all">
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -34,15 +36,15 @@ $time = '2021-01-18 14:07:33';
 </ul>
 </nav>
 <article>
-<?php for($i=0;$i<6;$i++):?>
+<?php foreach($posts as $post): ?>
     <section>
     <div class="inline-block_test">
-        <a href="view.php" class="view_title"><h2><?php print($title); ?></h2></a>
-        <p class="time"><?php print($time); ?></p>
+        <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><h2><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></h2></a>
+        <p class="time"><?php print(htmlspecialchars($post['created'], ENT_QUOTES)); ?></p>
     </div>
-    <a href="#" class="tag"><?php print($tag); ?></a>
+    <a href="#" class="tag"><?php print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); ?></a>
     </section>
-<?php endfor; ?>
+<?php endforeach; ?>
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     <li class="page-item">
@@ -76,6 +78,9 @@ $time = '2021-01-18 14:07:33';
     <form method="get" action="#" class="search_container">
     <input type="text" size="16" placeholder="　キーワード検索"><input type="submit" value="&#xf002">
     </form>
+    <!-- 検索ボックスに入力された文字を取得 -->
+    <?php $search = htmlspecialchars($_GET['search'],ENT_QUOTES,"UTF-8"); ?>
+    <?php print($search); ?>
 
 <section>
 <h1>カテゴリー</h1>
