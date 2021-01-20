@@ -3,7 +3,7 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 ?>
 
 <?php
-require('dbconenect.php');
+require('dbconnect.php');
 //データベースから取得
 $posts = $db->prepare('SELECT * FROM article ORDER BY created DESC');
 $posts->execute();

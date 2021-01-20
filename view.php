@@ -3,7 +3,7 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 ?>
 
 <?php
-require('dbconenect.php');
+require('dbconnect.php');
 //URLパラメータを指定せずにアクセスしようとした場合はheader('Location: index.php');
 if(empty($_REQUEST['id'])){
   header('Location: index.php');
