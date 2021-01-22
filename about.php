@@ -153,6 +153,15 @@ fclose($fp);
         <a href="mailto:b2190350@photon.chitose.ac.jp"><img class="sns" src="images/gmail.png" alt="画像"></a>
     </section>
 
+    <!-- 検索ボックス -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <form method="get" class="search_container">
+    <input type="text" name="search" size="16" placeholder="　キーワード検索"><input type="submit" value="&#xf002">
+    </form>
+    <!-- 検索ボックスに入力された文字を取得 -->
+    <?php $search = htmlspecialchars($_POST['search'],ENT_QUOTES); ?>
+
     <section>
     <h1>カテゴリー</h1>
     <?php
