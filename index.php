@@ -42,17 +42,14 @@ $posts->execute();
 </head>
 <body>
 <header>
-        <h1>Blogs</h1>
+        <h1><a class="notext-decoration" href="index.php">Blogs</a></h1>
         <p>うーたんの日記</p>
         </header>
 <nav>
 <h1>グローバルナビゲーション</h1>
 <ul>
 <li><a href="index.php">HOME</a></li>
-<li><a href="#">     </a></li>
-<li><a href="#">     </a></li>
-<li><a href="#">     </a></li>
-<li><a href="#">     </a></li>
+<li><a href="http://utan.php.xdomain.jp/">Portfolio</a></li>
 <li><a href="about.php">ABOUT</a></li>
 </ul>
 </nav>
@@ -115,16 +112,20 @@ $posts->execute();
 
 <section>
 <h1>カテゴリー</h1>
-<ul>
-<li><a href="#">カテゴリー1</a></li>
-<li><a href="#">カテゴリー2</a></li>
-<li><a href="#">カテゴリー3</a></li>
-<li><a href="#">カテゴリー4</a></li>
-<li><a href="#">カテゴリー5</a></li>
-</ul>
+<?php
+$stmt = $db->query('SELECT DISTINCT tag FROM article');
+
+while($result = $stmt->fetch(PDO::FETCH_ASSOC)):
+?>
+
+    <a href="view.php?searchTag=<?php print($result['tag']); ?>" class="tag tagSide"><?php print('#'.$result['tag']); ?></a>
+
+<?php endwhile; ?>
+
 </section>
 <section>
 <h1>最新記事</h1>
+<hr>
 <?php 
 $posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,3');
 $posts_new->execute();
