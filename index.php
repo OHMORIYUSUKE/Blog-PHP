@@ -62,7 +62,7 @@ $posts->execute();
         <p class="time"><?php print(htmlspecialchars($post['created'], ENT_QUOTES)); ?></p>
       </div>
       <div class="inline-block">
-        <a href="#" class="tag"><?php print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); ?></a>
+        <a href="view.php?searchTag=<?php print($post['tag']);?>" class="tag"><?php print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); ?></a>
       </div>
     </section>
 <?php endforeach; ?>
@@ -113,14 +113,14 @@ $posts->execute();
 <section>
 <h1>カテゴリー</h1>
 <?php
-$stmt = $db->query('SELECT DISTINCT tag FROM article');
-
-while($result = $stmt->fetch(PDO::FETCH_ASSOC)):
+$tags = $db->query('SELECT DISTINCT tag FROM article');
+$tags->execute();
+foreach($tags as $tag):
 ?>
 
-    <a href="view.php?searchTag=<?php print($result['tag']); ?>" class="tag tagSide"><?php print('#'.$result['tag']); ?></a>
+    <a href="view.php?searchTag=<?php print($tag['tag']); ?>" class="tag tagSide"><?php print('#'.$tag['tag']); ?></a>
 
-<?php endwhile; ?>
+<?php endforeach; ?>
 
 </section>
 <section>
