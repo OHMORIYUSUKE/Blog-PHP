@@ -25,45 +25,8 @@ require('dbconnect.php');
         <!-- ◇https://highlightjs.org/static/demo/                          -->
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/ir-black.min.css">
         
-        
     </head>
     <body>
-    <!-- ---------------------------------mdをHTMLに変換---------------------------------- -->
-    <script>
-    $(function() {
-
-        // ★marked.js の設定
-        marked.setOptions({
-            breaks : true,
-
-            // highlight.js でハイライトする
-            highlight: function(code, lang) {
-                return hljs.highlightAuto(code, [lang]).value;
-            }
-        });
-
-        // highlight.js の初期処理
-        hljs.initHighlightingOnLoad(); 
-
-        // ★マークダウンを HTML に変換して再セット
-        var md = marked(getHtml("div"));
-        $("div").html(md);
-
-    });
-
-    // 比較演算子が &lt; 等になるので置換
-    function getHtml(selector) {
-        var html = $(selector).html();
-        html = html.replace(/&lt;/g, '<');
-        html = html.replace(/&gt;/g, '>');
-        html = html.replace(/&amp;/g, '&');
-
-        return html;
-    }
-
-    </script>
-    <!-- ------------------------------------------------------------------------- -->
-
         <header>
         <h1><a class="notext-decoration" href="index.php">Blogs</a></h1>
         <p>うーたんの日記</p>
@@ -71,8 +34,8 @@ require('dbconnect.php');
         <nav>
             <ul>
                 <li><a href="index.php">HOME</a></li>
-                <li><a href="http://utan.php.xdomain.jp/">Portfolio</a></li>
                 <li><a href="about.php">ABOUT</a></li>
+                <li><a href="http://utan.php.xdomain.jp/">Portfolio</a></li>
             </ul>
         </nav>
     <article>
@@ -189,9 +152,11 @@ fclose($fp);
         <?php endforeach; ?>
     </section>
     </aside>
+    <button class="scroll-top" id="js-button"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
     <footer>
     Copyright ©HTML5 【 レイアウト 】 All Rights Reserved.<br>
     <a href="https://programmercollege.jp/column/1635/">レイアウト</a>
     </footer>
+    <script src="app.js"></script>
     </body>
 </html>

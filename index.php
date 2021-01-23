@@ -49,8 +49,8 @@ $posts->execute();
 <h1>グローバルナビゲーション</h1>
 <ul>
 <li><a href="index.php">HOME</a></li>
-<li><a href="http://utan.php.xdomain.jp/">Portfolio</a></li>
 <li><a href="about.php">ABOUT</a></li>
+<li><a href="http://utan.php.xdomain.jp/">Portfolio</a></li>
 </ul>
 </nav>
 <article>
@@ -137,9 +137,12 @@ $posts_new->execute();
 <?php endforeach; ?>
 </section>
 </aside>
+<button class="scroll-top" id="js-button"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
 <footer>
     Copyright ©HTML5 【 レイアウト 】 All Rights Reserved.<br>
     <a href="https://programmercollege.jp/column/1635/">レイアウト</a>
     </footer>
+
+    <script src="app.js"></script>
 </body>
 </html>
