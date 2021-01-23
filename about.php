@@ -9,6 +9,24 @@ require('dbconnect.php');
     <head>
         <meta charset="utf-8">
         <title>ブログ</title>
+
+        <link rel="icon" type="image/png" href="images/profile.jpg">
+
+        <!--facebook & その他SNSの設定-->
+        <meta property="og:title" content="うーたんのブログ">
+        <meta property="og:type" content="article">
+        <meta property="og:description" content="😗< <?php print('自己紹介します。'); ?>">
+        <meta property="og:url" content="http://localhost/html/Blog/about.php">
+        <meta property="og:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true">
+        <!-- <meta property="og:site_name" content="ポートフォリオ"> -->
+
+        <!--twitterの設定-->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="http://localhost/html/Blog/about.php">
+        <meta name="twitter:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true" />
+        <meta name="twitter:title" content="うーたんのブログ">
+        <meta name="twitter:description" content="😗< <?php print('自己紹介します。'); ?>">
+
         <link rel="stylesheet" type="text/css" href="main.css" media="all">
         
 

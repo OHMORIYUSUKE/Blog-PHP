@@ -7,3 +7,6 @@
 <!-- 検索ボックスに入力された文字を取得 -->
 <?php $search = htmlspecialchars($_POST['search'],ENT_QUOTES); ?>
 
+
+
+OGPのURLはすべて変更すること。
