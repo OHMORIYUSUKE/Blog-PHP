@@ -133,7 +133,7 @@ fclose($fp);
     foreach($tags as $tag):
     ?>
 
-        <a href="view.php?searchTag=<?php print($tag['tag']); ?>" class="tag tagSide"><?php print('#'.$tag['tag']); ?></a>
+        <a href="view.php?searchTag=<?php print(htmlspecialchars($tag['tag'], ENT_QUOTES)); ?>" class="tag tagSide"><?php print('#'.htmlspecialchars($tag['tag'], ENT_QUOTES)); ?></a>
 
     <?php endforeach; ?>
 
