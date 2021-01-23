@@ -6,6 +6,13 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 require('dbconnect.php');
 
 //URLパラメータで渡ってきたpage
+$tagName = $_REQUEST['searchTag'];
+
+if(empty($_REQUEST['searchTag'])){
+    header('Location: index.php');
+    exit();
+  }
+
 $page = $_REQUEST['page'];
 //URLパラメータで渡ってきたpageがnullだったら
 if($page == ''){
@@ -14,19 +21,26 @@ if($page == ''){
 //$pageが1より小さかったら$page=1
 $page = max($page,1);
 
-//dbからコメントの総数を取る
-$counts = $db->query('SELECT COUNT(*) AS cnt FROM article');
-$cnt = $counts->fetch(); //SQLたたいたらfetch()する
+
+$counts = $db->prepare('SELECT COUNT(*) AS cnt FROM article WHERE tag LIKE ?');
+//$cnt = $counts->fetch();
+$counts->execute(array(
+    $_REQUEST['searchTag']
+  ));
+$cnt = $counts->fetch();
+
 $maxPage = ceil($cnt['cnt'] / 6); //切り上げ
 $page = min($page,$maxPage); //$page>$maxPageだったら $page = $maxPage
 
 //ページネーションの計算
 $start = ($page - 1)*6;
 //データベースから取得
-$posts = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT ?,6');
+$searchTagArticles = $db->prepare('SELECT * FROM article WHERE tag LIKE ? ORDER BY created DESC LIMIT ?,6');
+//LIKE ?に入るのはtagの名前である。
+$searchTagArticles->bindParam(1, $tagName, PDO::PARAM_STR, 12);
 //LIMIT ?,5の?に入るのはint型ではないといけないので型指定できるbindParam(1, $start, PDO::PARAM_INT)を使う
-$posts->bindParam(1, $start, PDO::PARAM_INT);
-$posts->execute();
+$searchTagArticles->bindParam(2, $start, PDO::PARAM_INT);
+$searchTagArticles->execute();
 
 ?>
 
@@ -54,8 +68,8 @@ $posts->execute();
 </ul>
 </nav>
 <article>
-  <p>記事の総数：<?php print($cnt['cnt']);?>件</p>
-<?php foreach($posts as $post): ?>
+  <p><span class="tag">#<?php print(htmlspecialchars($tagName,ENT_QUOTES)); ?></span> の関連記事数：<?php print($cnt['cnt']);?>件</p>
+<?php foreach($searchTagArticles as $post): ?>
     <section>
         <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><h2><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></h2></a>
       <div class="inline-block">
@@ -70,7 +84,7 @@ $posts->execute();
   <ul class="pagination">
   <?php if($page > 1): ?>
     <li class="page-item">
-    &laquo;<a class="page-link" href="index.php?page=<?php print($page - 1); ?>" aria-label="Previous">
+    &laquo;<a class="page-link" href="searchTag.php?searchTag=<?php print($tagName); ?>&page=<?php print($page - 1); ?>" aria-label="Previous">
         <span aria-hidden="true">前のページへ</span>
       </a>
     </li>
@@ -79,7 +93,7 @@ $posts->execute();
     <?php endif; ?>
     <?php if($page < $maxPage): ?>
     <li class="page-item">
-      <a class="page-link" href="index.php?page=<?php print($page + 1); ?>" aria-label="Next">
+      <a class="page-link" href="searchTag.php?searchTag=<?php print($tagName); ?>&page=<?php print($page + 1); ?>" aria-label="Next">
         <span aria-hidden="true">次のページへ</span>
       </a>&raquo;
     </li>
@@ -103,6 +117,7 @@ $posts->execute();
 
     <!-- 検索ボックス -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 
 <section>
 <h1>カテゴリー</h1>

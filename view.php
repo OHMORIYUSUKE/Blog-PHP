@@ -4,11 +4,11 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 
 <?php
 require('dbconnect.php');
-// //URLパラメータを指定せずにアクセスしようとした場合はheader('Location: index.php');
-// if(empty($_REQUEST['id'])){
-//   header('Location: index.php');
-//   exit();
-// }
+//URLパラメータを指定せずにアクセスしようとした場合はheader('Location: index.php');
+if(empty($_REQUEST['id'])){
+  header('Location: index.php');
+  exit();
+}
 
 $posts = $db->prepare('SELECT * FROM article WHERE id=?');
 $posts->execute(array(
@@ -40,6 +40,40 @@ $post = $posts->fetch();
         
     </head>
     <body>
+        <script>
+            //マークダウンjs---------------------------------------------
+            $(function() {
+
+            // ★marked.js の設定
+            marked.setOptions({
+                breaks : true,
+
+                // highlight.js でハイライトする
+                highlight: function(code, lang) {
+                    return hljs.highlightAuto(code, [lang]).value;
+                }
+            });
+
+            // highlight.js の初期処理
+            hljs.initHighlightingOnLoad(); 
+
+            // ★マークダウンを HTML に変換して再セット
+            var md = marked(getHtml("div"));
+            $("div").html(md);
+
+            });
+
+            // 比較演算子が &lt; 等になるので置換
+            function getHtml(selector) {
+            var html = $(selector).html();
+            html = html.replace(/&lt;/g, '<');
+            html = html.replace(/&gt;/g, '>');
+            html = html.replace(/&amp;/g, '&');
+
+            return html;
+            }
+            //-------------------------------------------------------------
+        </script>
         <header>
         <h1><a class="notext-decoration" href="index.php">Blogs</a></h1>
         <p>うーたんの日記</p>
@@ -48,26 +82,12 @@ $post = $posts->fetch();
             <ul>
                 <li><a href="index.php">HOME</a></li>
                 <li><a href="about.php">ABOUT</a></li>
-                <li><a href="http://utan.php.xdomain.jp/">Portfolio</a></li>
+                <li><a href="http://utan.php.xdomain.jp/">Portfolio</a></li><img src="images/external_link.png" alt="画像" style="width:15px">
             </ul>
         </nav>
     <article>
         <section>
-<?php 
-// $tag = 'プログラミング';
-// $tag = '#'.$tag; 
 
-// $title = 'C言語は難しい';
-
-// $created = '2021-01-18 14:07:33';
-
-// $text = '
-// # 目次
-// 1. [C言語とは](#anchor1)
-// 1. [C言語の特徴](#anchor2)
-// 1. [サンプルコード](#anchor3)
-// ';
-?>
 <div>
 <!-- 指定されたURLパラメータが間違っていた場合(postはNULLである) -->
 <?php if($post): ?>
@@ -85,7 +105,7 @@ print(htmlspecialchars($post['created'], ENT_QUOTES));
 <h1 class="title"><?php //print($title); 
 print(htmlspecialchars($post['title'], ENT_QUOTES)); 
 ?></h1>
-<a href="view.php?searchTag=<?php print($post['tag']);?>" class="tag"><?php //print($tag); 
+<a href="searchTag.php?searchTag=<?php print($post['tag']);?>" class="tag"><?php //print($tag); 
 print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); 
 ?></a>
 
@@ -127,12 +147,6 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
     <!-- 検索ボックス -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <form method="get" class="search_container">
-    <input type="text" name="search" size="16" placeholder="　キーワード検索"><input type="submit" value="&#xf002">
-    </form>
-    <!-- 検索ボックスに入力された文字を取得 -->
-    <?php $search = htmlspecialchars($_POST['search'],ENT_QUOTES); ?>
-
     <section>
     <h1>カテゴリー</h1>
     <?php
@@ -141,7 +155,7 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
     foreach($tags as $tag):
     ?>
 
-<a href="view.php?searchTag=<?php print(htmlspecialchars($tag['tag'], ENT_QUOTES)); ?>" class="tag tagSide"><?php print('#'.htmlspecialchars($tag['tag'], ENT_QUOTES)); ?></a>
+    <a href="searchTag.php?searchTag=<?php print(htmlspecialchars($tag['tag'], ENT_QUOTES)); ?>" class="tag tagSide"><?php print('#'.htmlspecialchars($tag['tag'], ENT_QUOTES)); ?></a>
 
     <?php endforeach; ?>
 

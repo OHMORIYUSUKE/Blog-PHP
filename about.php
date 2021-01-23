@@ -27,6 +27,40 @@ require('dbconnect.php');
         
     </head>
     <body>
+    <script>
+            //マークダウンjs---------------------------------------------
+            $(function() {
+
+            // ★marked.js の設定
+            marked.setOptions({
+                breaks : true,
+
+                // highlight.js でハイライトする
+                highlight: function(code, lang) {
+                    return hljs.highlightAuto(code, [lang]).value;
+                }
+            });
+
+            // highlight.js の初期処理
+            hljs.initHighlightingOnLoad(); 
+
+            // ★マークダウンを HTML に変換して再セット
+            var md = marked(getHtml("div"));
+            $("div").html(md);
+
+            });
+
+            // 比較演算子が &lt; 等になるので置換
+            function getHtml(selector) {
+            var html = $(selector).html();
+            html = html.replace(/&lt;/g, '<');
+            html = html.replace(/&gt;/g, '>');
+            html = html.replace(/&amp;/g, '&');
+
+            return html;
+            }
+            //-------------------------------------------------------------
+        </script>
         <header>
         <h1><a class="notext-decoration" href="index.php">Blogs</a></h1>
         <p>うーたんの日記</p>
@@ -35,7 +69,7 @@ require('dbconnect.php');
             <ul>
                 <li><a href="index.php">HOME</a></li>
                 <li><a href="about.php">ABOUT</a></li>
-                <li><a href="http://utan.php.xdomain.jp/">Portfolio</a></li>
+                <li><a href="http://utan.php.xdomain.jp/">Portfolio</a></li><img src="images/external_link.png" alt="画像" style="width:15px">
             </ul>
         </nav>
     <article>
@@ -45,13 +79,6 @@ $tag = '自己紹介';
 $tag = '#'.$tag; 
 
 $title = '自己紹介します。';
-
-// $text = '
-// # 目次
-// 1. [C言語とは](#anchor1)
-// 1. [C言語の特徴](#anchor2)
-// 1. [サンプルコード](#anchor3)
-// ';
 ?>
 <div>
 
@@ -101,7 +128,8 @@ fclose($fp);
 
 </div>
 <br>
-<p>&laquo; <a href="index.php">メインページへ</a></p>           
+<p>&laquo; <a href="index.php">メインページへ</a></p> 
+
         </section>
             </article>
             <aside>
@@ -119,12 +147,6 @@ fclose($fp);
     <!-- 検索ボックス -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <form method="get" class="search_container">
-    <input type="text" name="search" size="16" placeholder="　キーワード検索"><input type="submit" value="&#xf002">
-    </form>
-    <!-- 検索ボックスに入力された文字を取得 -->
-    <?php $search = htmlspecialchars($_POST['search'],ENT_QUOTES); ?>
-
     <section>
     <h1>カテゴリー</h1>
     <?php
@@ -133,7 +155,7 @@ fclose($fp);
     foreach($tags as $tag):
     ?>
 
-        <a href="view.php?searchTag=<?php print(htmlspecialchars($tag['tag'], ENT_QUOTES)); ?>" class="tag tagSide"><?php print('#'.htmlspecialchars($tag['tag'], ENT_QUOTES)); ?></a>
+        <a href="searchTag.php?searchTag=<?php print(htmlspecialchars($tag['tag'], ENT_QUOTES)); ?>" class="tag tagSide"><?php print('#'.htmlspecialchars($tag['tag'], ENT_QUOTES)); ?></a>
 
     <?php endforeach; ?>
 
