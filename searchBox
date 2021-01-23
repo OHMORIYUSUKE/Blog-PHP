@@ -1,3 +1,4 @@
+---------HTML---------
 <!-- 検索ボックス -->
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -6,6 +7,33 @@
 </form>
 <!-- 検索ボックスに入力された文字を取得 -->
 <?php $search = htmlspecialchars($_POST['search'],ENT_QUOTES); ?>
+
+
+--------CSS-----------
+/*検索ボックス*/
+.search_container{
+    box-sizing: border-box;
+    padding-bottom: 10px;
+  }
+  .search_container input[type="text"]{
+    background: #ccddf5;
+    border: none;
+    height: 35px;
+  }
+  .search_container input[type="text"]:focus {
+    outline: 0;
+  }
+  .search_container input[type="submit"]{
+    cursor: pointer;
+    font-family: FontAwesome;
+    border: none;
+    background: #3879D9;
+    color: #fff;
+    outline : none;
+    width: 3.0em;
+    height: 37px;
+  }
+
 
 
 
