@@ -3,7 +3,11 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 
 require('dbconnect.php');
 ?>
+<?php 
+$tag = '自己紹介';
 
+$title = '自己紹介します。';
+?>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -15,7 +19,7 @@ require('dbconnect.php');
         <!--facebook & その他SNSの設定-->
         <meta property="og:title" content="うーたんのブログ">
         <meta property="og:type" content="article">
-        <meta property="og:description" content="😗< <?php print('自己紹介します。'); ?>">
+        <meta property="og:description" content="😗< <?php print($title); ?>">
         <meta property="og:url" content="http://localhost/html/Blog/about.php">
         <meta property="og:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true">
         <!-- <meta property="og:site_name" content="ポートフォリオ"> -->
@@ -92,11 +96,7 @@ require('dbconnect.php');
         </nav>
     <article>
         <section>
-<?php 
-$tag = '自己紹介';
 
-$title = '自己紹介します。';
-?>
 <div>
 
 <?php //タイトル.投稿時刻.タグ
