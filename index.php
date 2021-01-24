@@ -60,15 +60,15 @@ $posts->execute();
 </head>
 <body>
 <header>
-        <h1><a class="notext-decoration" href="index.php">Blogs</a></h1>
-        <p>うーたんの日記</p>
+        <h1><a class="notext-decoration" href="index.php">Blog</a></h1>
+        <p>うーたんのブログ</p>
         </header>
 <nav>
 <h1>グローバルナビゲーション</h1>
 <ul>
-<li><a href="index.php">HOME</a></li>
-<li><a href="about.php">ABOUT</a></li>
-<li><a href="http://utan.php.xdomain.jp/">Portfolio</a></li><img src="images/external_link.png" alt="画像" style="width:15px">
+<li><a class="navTop" href="index.php">🏡 HOME</a></li>
+<li><a class="navTop" href="about.php">🧑 ABOUT</a></li>
+<li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio</a></li><img src="images/external_link.png" alt="画像" style="width:15px">
 </ul>
 </nav>
 <article>
@@ -110,7 +110,7 @@ $posts->execute();
 <aside>
     <section>
     <h1>プロフィール</h1>
-        <img  class="profile" src="images/profile.jpg" alt="画像">
+        <a href="about.php"><img  class="profile" src="images/profile.jpg" alt="画像"></a>
         <a href="about.php">うーたん</a>
         <!-- <img src="images/external_link.png" alt="画像" width="14%"> -->
         <p class="sns_text">SNS</p>
@@ -151,8 +151,7 @@ $posts_new->execute();
 </aside>
 <button class="scroll-top" id="js-button"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
 <footer>
-    Copyright ©HTML5 【 レイアウト 】 All Rights Reserved.<br>
-    <a href="https://programmercollege.jp/column/1635/">レイアウト</a>
+    Copyright © 2021 Ohmori Yusuke Blog All Rights Reserved.
     </footer>
 
     <script src="app.js"></script>
