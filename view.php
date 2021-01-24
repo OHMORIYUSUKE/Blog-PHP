@@ -147,6 +147,14 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
 <?php endif; ?>
 </div>
 <br>
+<?php //SNS共有ボタン ?>
+<ul class="shareSns">
+    <li><a class="twitter" href="http://twitter.com/share?text=うーたんのブログ【<?php print($post['title']); ?>】&hashtags=ブログ,<?php print($post['tag']); ?>&url=http://localhost/html/Blog/view.php?id=<?php print($_REQUEST['id']); ?>" rel="nofollow">Tweet</a></li>
+    <li><a class="facebook" href="http://www.facebook.com/share.php?u=http://localhost/html/Blog/view.php?id=<?php print($_REQUEST['id']); ?>" >Facebook</a></li>
+    <li><a class="getpocket" href="http://getpocket.com/edit?url=http://localhost/html/Blog/view.php?id=<?php print($_REQUEST['id']); ?>" rel="nofollow">Pocket</a></li>
+    <li><a class="line" href="https://social-plugins.line.me/lineit/share?url=http://localhost/html/Blog/view.php?id=<?php print($_REQUEST['id']); ?>">LINE</a></li>
+</ul>
+<br>
 <p>&laquo; <a href="index.php">メインページへ</a></p>           
         </section>
             </article>

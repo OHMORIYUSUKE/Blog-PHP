@@ -94,7 +94,6 @@ require('dbconnect.php');
         <section>
 <?php 
 $tag = '自己紹介';
-$tag = '#'.$tag; 
 
 $title = '自己紹介します。';
 ?>
@@ -117,7 +116,7 @@ $created = fgets($fp);
 
 <p class="time"><?php print($created); ?></p>
 <h1 class="title"><?php print($title); ?></h1>
-<a href="about.php?searchTag=<?php print("自己紹介"); ?>" class="tag"><?php print($tag); ?></a>
+<a href="about.php?searchTag=<?php print("自己紹介"); ?>" class="tag"><?php print('#'.$tag); ?></a>
 
 <?php //内容
 //print($text);
@@ -145,6 +144,14 @@ fclose($fp);
 ?>
 
 </div>
+<br>
+<?php //SNS共有ボタン ?>
+<ul class="shareSns">
+    <li><a class="twitter" href="http://twitter.com/share?text=うーたんのブログ【<?php print($title); ?>】&hashtags=ブログ,<?php print($tag); ?>&url=http://localhost/html/Blog/about.php" rel="nofollow">Tweet</a></li>
+    <li><a class="facebook" href="http://www.facebook.com/share.php?u=http://localhost/html/Blog/about.php" >Facebook</a></li>
+    <li><a class="getpocket" href="http://getpocket.com/edit?url=http://localhost/html/Blog/about.php" rel="nofollow">Pocket</a></li>
+    <li><a class="line" href="https://social-plugins.line.me/lineit/share?url=http://localhost/html/Blog/about.php">LINE</a></li>
+</ul>
 <br>
 <p>&laquo; <a href="index.php">メインページへ</a></p> 
 
