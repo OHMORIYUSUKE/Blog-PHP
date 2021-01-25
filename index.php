@@ -4,7 +4,7 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 
 <?php
 require('dbconnect.php');
-
+require('hour.php');
 //URLパラメータで渡ってきたpage
 $page = $_REQUEST['page'];
 //URLパラメータで渡ってきたpageがnullだったら
@@ -28,6 +28,8 @@ $posts = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT ?,6');
 $posts->bindParam(1, $start, PDO::PARAM_INT);
 $posts->execute();
 
+//createdを整形する
+$date = date('Y/m/d', strtotime($post['created']));
 ?>
 
 <!DOCTYPE html>
@@ -42,13 +44,13 @@ $posts->execute();
 <meta property="og:title" content="うーたんのブログ">
 <meta property="og:type" content="article">
 <meta property="og:description" content="😗< <?php print('見てね！'); ?>">
-<meta property="og:url" content="http://localhost/html/Blog/index.php">
+<meta property="og:url" content="http://utan.php.xdomain.jp/blog/index.php">
 <meta property="og:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true">
 <!-- <meta property="og:site_name" content="ポートフォリオ"> -->
 
 <!--twitterの設定-->
 <meta name="twitter:card" content="summary">
-<meta name="twitter:site" content="http://localhost/html/Blog/index.php">
+<meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/index.php">
 <meta name="twitter:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true" />
 <meta name="twitter:title" content="うーたんのブログ">
 <meta name="twitter:description" content="😗< <?php print('見てね！'); ?>">
@@ -60,7 +62,7 @@ $posts->execute();
 </head>
 <body>
 <header>
-        <h1><a class="notext-decoration" href="index.php">Blog</a></h1>
+        <h1><a class="notext-decoration" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
         <p>うーたんのブログ</p>
         </header>
 <nav>
@@ -68,7 +70,7 @@ $posts->execute();
 <ul>
 <li><a class="navTop" href="index.php">🏡 HOME</a></li>
 <li><a class="navTop" href="about.php">🧑 ABOUT</a></li>
-<li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio</a></li><img src="images/external_link.png" alt="画像" style="width:15px">
+<li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio <img class="externalLink" src="images/external_link.png" alt="画像"></a></li>
 </ul>
 </nav>
 <article>
@@ -76,8 +78,11 @@ $posts->execute();
 <?php foreach($posts as $post): ?>
     <section>
         <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><h2><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></h2></a>
-      <div class="inline-block">
-        <p class="time"><?php print(htmlspecialchars($post['created'], ENT_QUOTES)); ?></p>
+        <div class="inline-block">
+          <img class="timeImage" src="images/time.png" alt="画像">
+        </div>
+        <div class="inline-block">
+        <p class="time"><?php print(htmlspecialchars($date, ENT_QUOTES)); ?></p>
       </div>
       <div class="inline-block">
         <a href="searchTag.php?searchTag=<?php print($post['tag']);?>" class="tag"><?php print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); ?></a>

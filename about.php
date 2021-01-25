@@ -2,6 +2,7 @@
 error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 
 require('dbconnect.php');
+require('hour.php');
 ?>
 <?php 
 $tag = '自己紹介';
@@ -20,13 +21,13 @@ $title = '自己紹介します。';
         <meta property="og:title" content="うーたんのブログ">
         <meta property="og:type" content="article">
         <meta property="og:description" content="😗< <?php print($title); ?>">
-        <meta property="og:url" content="http://localhost/html/Blog/about.php">
+        <meta property="og:url" content="http://utan.php.xdomain.jp/blog/about.php">
         <meta property="og:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true">
         <!-- <meta property="og:site_name" content="ポートフォリオ"> -->
 
         <!--twitterの設定-->
         <meta name="twitter:card" content="summary">
-        <meta name="twitter:site" content="http://localhost/html/Blog/about.php">
+        <meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/about.php">
         <meta name="twitter:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true" />
         <meta name="twitter:title" content="うーたんのブログ">
         <meta name="twitter:description" content="😗< <?php print('自己紹介します。'); ?>">
@@ -84,14 +85,14 @@ $title = '自己紹介します。';
             //-------------------------------------------------------------
         </script>
         <header>
-        <h1><a class="notext-decoration" href="index.php">Blog</a></h1>
+        <h1><a class="notext-decoration" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
         <p>うーたんのブログ</p>
         </header>
         <nav>
         <ul>
             <li><a class="navTop" href="index.php">🏡 HOME</a></li>
             <li><a class="navTop" href="about.php">🧑 ABOUT</a></li>
-            <li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio</a></li><img src="images/external_link.png" alt="画像" style="width:15px">
+            <li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio <img class="externalLink" src="images/external_link.png" alt="画像"></a></li>
         </ul>
         </nav>
     <article>
@@ -114,7 +115,7 @@ $fp = fopen($filename, 'r');
 $created = fgets($fp);
 ?>
 
-<p class="time"><?php print($created); ?></p>
+<p class="time"><img class="timeImage" src="images/time.png" alt="画像"> <?php print($created); ?></p>
 <h1 class="title"><?php print($title); ?></h1>
 <a href="about.php?searchTag=<?php print("自己紹介"); ?>" class="tag"><?php print('#'.$tag); ?></a>
 
@@ -147,10 +148,10 @@ fclose($fp);
 <br>
 <?php //SNS共有ボタン ?>
 <ul class="shareSns">
-    <li><a class="twitter" href="http://twitter.com/share?text=うーたんのブログ【<?php print($title); ?>】&hashtags=ブログ,<?php print($tag); ?>&url=http://localhost/html/Blog/about.php" rel="nofollow">Tweet</a></li>
-    <li><a class="facebook" href="http://www.facebook.com/share.php?u=http://localhost/html/Blog/about.php" >Facebook</a></li>
-    <li><a class="getpocket" href="http://getpocket.com/edit?url=http://localhost/html/Blog/about.php" rel="nofollow">Pocket</a></li>
-    <li><a class="line" href="https://social-plugins.line.me/lineit/share?url=http://localhost/html/Blog/about.php">LINE</a></li>
+    <li><a class="twitter" href="http://twitter.com/share?text=うーたんのブログ【<?php print($title); ?>】&hashtags=ブログ,<?php print($tag); ?>&url=http://utan.php.xdomain.jp/blog/about.php" rel="nofollow">Tweet</a></li>
+    <li><a class="facebook" href="http://www.facebook.com/share.php?u=http://utan.php.xdomain.jp/blog/about.php" >Facebook</a></li>
+    <li><a class="getpocket" href="http://getpocket.com/edit?url=http://utan.php.xdomain.jp/blog/about.php" rel="nofollow">Pocket</a></li>
+    <li><a class="line" href="https://social-plugins.line.me/lineit/share?url=http://utan.php.xdomain.jp/blog/about.php">LINE</a></li>
 </ul>
 <br>
 <p>&laquo; <a href="index.php">メインページへ</a></p> 

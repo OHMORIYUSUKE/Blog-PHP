@@ -55,7 +55,7 @@ aside {
 footer {
     clear:both;  /*←articleとasideのfloatを、これでクリア。*/
     text-align: center;
-    padding: 5px;
+    padding: 15px;
     font-size: 80%;
 }
 
@@ -65,12 +65,25 @@ table  { border-collapse: collapse; }
 th, td { border:1px solid #999; padding:2px 5px; }
 th     { background:#e0e0e0; }
 
+/*GIF画像*/
+.topGif{
+    width: 5%;
+    margin-left: 2%;
+}
 /*ブログタイトル*/
 .title{
     font-size: 2.2rem;
     background:linear-gradient(transparent 95%, #999 0%);
     margin: 0 !important;
     padding: 0 !important;
+}
+.externalLink{
+    width: 19px;
+    vertical-align:middle;
+}
+.timeImage{
+    width: 19px;
+    vertical-align:middle;
 }
 /*ブログタイトル(まとめページ)*/
 .view_title{
