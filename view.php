@@ -113,13 +113,6 @@ $date = date('Y/m/d', strtotime($post['created']));
 <div>
 <!-- 指定されたURLパラメータが間違っていた場合(postはNULLである) -->
 <?php if($post): ?>
-<?php //タイトル.投稿時刻.タグ
-//サニタイジング
-$title = str_replace("<script>", "＜script＞", $title,$n);
-$title = str_replace("</script>", "＜/script＞", $title,$n);
-$tag = str_replace("<script>", "＜script＞", $tag,$n);
-$tag = str_replace("</script>", "＜/script＞", $tag,$n);
-?>
 
 <p class="time"><img class="timeImage" src="images/time.png" alt="画像"> <?php //print($created); 
 print(htmlspecialchars($date, ENT_QUOTES)); 
@@ -132,10 +125,6 @@ print('#'.htmlspecialchars($post['tag'], ENT_QUOTES));
 ?></a>
 
 <?php //内容
-//サニタイジング
-$text = str_replace("<script>", "＜script＞", $text,$n);
-$text = str_replace("</script>", "＜/script＞", $text,$n);
-
 //print($text); 
 print(htmlspecialchars($post['text'], ENT_QUOTES)); 
 ?>

@@ -21,4 +21,4 @@
 - [うーたんの自己紹介](https://uu-tan.hatenablog.jp/entry/2020/11/05/184728)
 ## Twitter
 メインアカウント　　　　　　　　VRC用アカウント
-<a class="twitter-timeline" data-width="250" data-height="400" data-theme="light" href="https://twitter.com/u____tan_?ref_src=twsrc%5Etfw">Tweets by u____tan_</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><a class="twitter-timeline" data-width="250" data-height="400" data-theme="light" href="https://twitter.com/rgSs28Q5ikifA0V?ref_src=twsrc%5Etfw">Tweets by rgSs28Q5ikifA0V</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<a class="twitter-timeline" data-width="250" data-height="400" data-theme="light" href="https://twitter.com/uutan1108?ref_src=twsrc%5Etfw">Tweets by u____tan_</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><a class="twitter-timeline" data-width="250" data-height="400" data-theme="light" href="https://twitter.com/rgSs28Q5ikifA0V?ref_src=twsrc%5Etfw">Tweets by rgSs28Q5ikifA0V</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
