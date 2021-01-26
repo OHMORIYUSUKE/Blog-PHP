@@ -95,6 +95,10 @@ $date = date('Y/m/d', strtotime($post['created']));
         <div class="inline-block">
           <img class="timeImage" src="images/time.png" alt="画像">
         </div>
+        <?php 
+          //createdを整形する
+          $date = date('Y/m/d', strtotime($post['created']));
+        ?>
         <div class="inline-block">
         <p class="time"><?php print(htmlspecialchars($date, ENT_QUOTES)); ?></p>
       </div>

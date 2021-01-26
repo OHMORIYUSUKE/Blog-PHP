@@ -28,8 +28,6 @@ $posts = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT ?,6');
 $posts->bindParam(1, $start, PDO::PARAM_INT);
 $posts->execute();
 
-//createdを整形する
-$date = date('Y/m/d', strtotime($post['created']));
 ?>
 
 <!DOCTYPE html>
@@ -81,6 +79,10 @@ $date = date('Y/m/d', strtotime($post['created']));
         <div class="inline-block">
           <img class="timeImage" src="images/time.png" alt="画像">
         </div>
+        <?php 
+          //createdを整形する
+          $date = date('Y/m/d', strtotime($post['created']));
+        ?>
         <div class="inline-block">
         <p class="time"><?php print(htmlspecialchars($date, ENT_QUOTES)); ?></p>
       </div>
