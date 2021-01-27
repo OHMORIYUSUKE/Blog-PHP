@@ -137,7 +137,7 @@ $date = date('Y/m/d', strtotime($post['created']));
         <a href="about.php">うーたん</a>
         <!-- <img src="images/external_link.png" alt="画像" width="14%"> -->
         <p class="sns_text">SNS</p>
-        <a href="https://twitter.com/u____tan_"><img class="sns" src="images/twitter.png" alt="画像"></a>
+        <a href="https://twitter.com/uutan1108"><img class="sns" src="images/twitter.png" alt="画像"></a>
         <a href="https://github.com/OHMORIYUSUKE"><img class="sns" src="images/github.png" alt="画像"></a>
         <a href="mailto:b2190350@photon.chitose.ac.jp"><img class="sns" src="images/gmail.png" alt="画像"></a>
     </section>
