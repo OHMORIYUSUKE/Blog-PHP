@@ -1,0 +1,73 @@
+# 目次
+1. [このブログサイトを作ろうと思ったきっかけ](#anchor1)
+1. [苦労した点](#anchor2)
+1. [PHPをUdemyを受講する前のコード](#anchor3)
+1. [PHPをUdemyを受講した後のコード](#anchor4)
+<a id="anchor1"></a>
+
+## 1. このブログサイトを作ろうと思ったきっかけ
+> [ポートフォリオサイト](http://utan.php.xdomain.jp/blog.php)を昨年の10月に制作しました。制作後、自分の[はてなブログ](https://uu-tan.hatenablog.jp/)の投稿記事をポートフォリオサイトにも表示したいと思いPHPの学習を開始しました。学習の結果、ポートフォリオサイトに投稿記事を表示することができました。その当時は、PHPの基礎文法のみの学習しかしておらず、データベースとは何なのか理解していませんでした。  
+> データベースも学習したいと思い、[UdemyのPHPの講座](https://www.udemy.com/course/php7basic/)を学習し、SQLも学ぶことができました。学習後、アウトプットしたいと思いBlogを自作することにしました。
+
+# UdemyのPHPの講座で制作したもの
+<div class="youtube">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lORBuu9vzmU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<a id="anchor2"></a>
+
+## 2. 苦労した点
+> エラーが消えなかったり、レンタルサーバーのphpMyAdminの設定が思うようにいかなかったりと大変でした。しかし、講座をまねるのではなく、自ら考えコーディングすることは楽しく、いい勉強になりました。
+
+<a id="anchor3"></a>
+
+## 3. PHPをUdemyを受講する前のコード(一部)
+
+```PHP
+try{
+    $db = new PDO($dsn, $user, $password);
+    //SQLコマンド
+    $sql = 'SELECT * FROM staffname LEFT JOIN staffdescription ON staffname.id = staffdescription.staffid WHERE groups LIKE \''.$value1.'%\' ORDER BY '.$value2.' ASC';
+    $sth = $db->prepare($sql);
+    $sth->execute();
+    //queryはsqlコマンドによってデータを取り出す
+    while ($row = $sth->fetch()) {?>
+
+        <?php print('名前：'.$row['name'].' / '.$row['groups'].'所属 / '.$row['age'].'歳 / 身長 '.$row['height'].'cm');
+        if($row['name'] == $osiname){
+            print("　☜　あなたの推し");
+        }
+        ?>
+
+    <?php }
+}catch (PDOException $e){
+    print('データベース接続エラー : '.$e->getMessage());
+    die();
+}
+
+```
+> SQLに直接入れていて最悪です。
+<a id="anchor4"></a>
+
+## 4. PHPをUdemyを受講した後のコード(一部)
+
+```PHP
+<?php
+session_start();
+require('dbconenect.php');
+//URLパラメータを指定せずにアクセスしようとした場合はheader('Location: index.php');
+if(empty($_REQUEST['id'])){
+  header('Location: index.php');
+  exit();
+}
+
+$posts = $db->prepare('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id AND p.id=?');
+$posts->execute(array(
+  $_REQUEST['id']
+));
+$post = $posts->fetch();
+?>
+```
+> SQLに直接入れていないので大丈夫かな。セキュリティは分からないので勉強したい。
+
+> このブログサイトに不具合があったら[twitter](https://twitter.com/u____tan_)で教えてください。

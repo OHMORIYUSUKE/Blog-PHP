@@ -1,5 +1,6 @@
 <?php
 //いつか使えるかもしれない
+//Michelfフォルダを使ってmd2HTML
 // 1初期設定
 require_once("Michelf/Markdown.inc.php");
 use Michelf\Markdown;
