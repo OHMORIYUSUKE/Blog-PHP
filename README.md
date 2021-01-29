@@ -4,7 +4,9 @@
 約２週間ほどかけて制作しました。  
 
 PCでの画面
-<img src="md.png" width="100%">  
+![画像](md.png)  
 
 スマートフォンでの画面
-<img src="README_images/2.jpg" width="50%"><img src="README_images/1.jpg" width="50%">
+|index.php|view.php|
+|---|---|
+|![画像](README_images/2.jpg)|![画像](README_images/1.jpg)|
