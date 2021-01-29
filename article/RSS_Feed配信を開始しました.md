@@ -61,4 +61,4 @@ function md2html($md){
 これでは使えないので、[feed43](https://node2.feed43.com/)でrss配信しました。  
 
 すると、こんな感じで外部のサイトで記事の内容を取得できるようになります。
-<img src="https://github.com/OHMORIYUSUKE/Blog-PHP/blob/master/article/images/%E3%82%8F%E3%81%9F%E3%81%97%E3%81%AE%E5%A5%BD%E3%81%8D%E3%81%AA%E3%82%A2%E3%83%8B%E3%83%A1/SHIROBAKO.png?raw=true" width="100%">
+<img src="https://github.com/OHMORIYUSUKE/Blog-PHP/blob/master/article/images/RSS_Feed%E9%85%8D%E4%BF%A1%E3%82%92%E9%96%8B%E5%A7%8B%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/1.png?raw=true" width="100%">
