@@ -37,6 +37,9 @@ $title = '自己紹介します。';
 
         <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
 
+        <!--レスポンシブ-->
+        <meta name="viewport" content="width=device-width">
+
         <!-- ★マークダウン変換用 -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
 
@@ -85,8 +88,8 @@ $title = '自己紹介します。';
             //-------------------------------------------------------------
         </script>
         <header>
-        <h1><a class="notext-decoration" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
-        <p>うーたんのブログ</p>
+        <h1><a class="notext-decoration headerTitle" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
+        <p class="headerSubTitle">うーたんのブログ</p>
         </header>
         <nav>
         <ul>
@@ -95,7 +98,7 @@ $title = '自己紹介します。';
             <li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio <img class="externalLink" src="images/external_link.png" alt="画像"></a></li>
         </ul>
         </nav>
-    <article>
+    <article class="article">
         <section>
 
 <div>
@@ -154,27 +157,31 @@ fclose($fp);
     <li><a class="line" href="https://social-plugins.line.me/lineit/share?url=http://utan.php.xdomain.jp/blog/about.php">LINE</a></li>
 </ul>
 <br>
-<p>&laquo; <a href="index.php">メインページへ</a></p> 
+<p class="toTop">&laquo; <a href="index.php">メインページへ</a></p> 
 
         </section>
             </article>
-            <aside>
-    <section>
-    <h1>プロフィール</h1>
+            <aside class="aside">
+    <section class="box">
+    <die class="inline-block1">
+    <h1 class="sideTitle prof">プロフィール</h1>
         <a href="about.php"><img  class="profile" src="images/profile.jpg" alt="画像"></a>
-        <a href="about.php">うーたん</a>
+        <p class="prof"><a href="about.php">うーたん</a></p>
+    </die>
+    <die class="inline-block1">
         <!-- <img src="images/external_link.png" alt="画像" width="14%"> -->
         <p class="sns_text">SNS</p>
         <a href="https://twitter.com/uutan1108"><img class="sns" src="images/twitter.png" alt="画像"></a>
         <a href="https://github.com/OHMORIYUSUKE"><img class="sns" src="images/github.png" alt="画像"></a>
         <a href="mailto:b2190350@photon.chitose.ac.jp"><img class="sns" src="images/gmail.png" alt="画像"></a>
+    </die>
     </section>
 
     <!-- 検索ボックス -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <section>
-    <h1>カテゴリー</h1>
+    <section class="box2">
+    <h1 class="sideTitle">カテゴリー</h1>
     <?php
     $tags = $db->query('SELECT DISTINCT tag FROM article');
     $tags->execute();
@@ -186,11 +193,11 @@ fclose($fp);
     <?php endforeach; ?>
 
     </section>
-    <section>
-    <h1>最新記事</h1>
+    <section class="box2">
+    <h1 class="sideTitle">最新記事</h1>
         <hr>
         <?php 
-        $posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,3');
+        $posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,4');
         $posts_new->execute();
         ?>
         <?php foreach($posts_new as $post): ?>

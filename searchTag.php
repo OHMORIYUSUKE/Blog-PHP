@@ -69,6 +69,12 @@ $date = date('Y/m/d', strtotime($post['created']));
 <meta name="twitter:title" content="うーたんのブログ">
 <meta name="twitter:description" content="😗< <?php print('見てね！'); ?>">
 
+<!-- jQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+<!--レスポンシブ-->
+<meta name="viewport" content="width=device-width">
+
 <link rel="stylesheet" type="text/css" href="main.css" media="all">
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -76,8 +82,8 @@ $date = date('Y/m/d', strtotime($post['created']));
 </head>
 <body>
 <header>
-        <h1><a class="notext-decoration" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
-        <p>うーたんのブログ</p>
+        <h1><a class="notext-decoration headerTitle" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
+        <p class="headerSubTitle">うーたんのブログ</p>
         </header>
 <nav>
 <h1>グローバルナビゲーション</h1>
@@ -87,8 +93,8 @@ $date = date('Y/m/d', strtotime($post['created']));
 <li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio <img class="externalLink" src="images/external_link.png" alt="画像"></a></li>
 </ul>
 </nav>
-<article>
-  <p><span class="tag">#<?php print(htmlspecialchars($tagName,ENT_QUOTES)); ?></span> の関連記事数：<?php print($cnt['cnt']);?>件</p>
+<article class="article">
+  <p><span class="tag">#<?php print(htmlspecialchars($tagName,ENT_QUOTES)); ?></span><span class="counter"> の関連記事数：<?php print($cnt['cnt']);?>件</span></p>
 <?php foreach($searchTagArticles as $post): ?>
     <section>
         <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><h2><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></h2></a>
@@ -130,24 +136,27 @@ $date = date('Y/m/d', strtotime($post['created']));
   </ul>
 </nav>
 </article>
-<aside>
-    <section>
-    <h1>プロフィール</h1>
+<aside class="aside">
+    <section class="box">
+      <div class="inline-block1">
+      <h1 class="sideTitle prof">プロフィール</h1>
         <a href="about.php"><img  class="profile" src="images/profile.jpg" alt="画像"></a>
-        <a href="about.php">うーたん</a>
+        <p class="prof"><a href="about.php">うーたん</a></p>
+      </div>
+      <div class="inline-block1">
         <!-- <img src="images/external_link.png" alt="画像" width="14%"> -->
         <p class="sns_text">SNS</p>
         <a href="https://twitter.com/uutan1108"><img class="sns" src="images/twitter.png" alt="画像"></a>
         <a href="https://github.com/OHMORIYUSUKE"><img class="sns" src="images/github.png" alt="画像"></a>
         <a href="mailto:b2190350@photon.chitose.ac.jp"><img class="sns" src="images/gmail.png" alt="画像"></a>
+      </div>
     </section>
 
     <!-- 検索ボックス -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-
-<section>
-<h1>カテゴリー</h1>
+<section class="box2">
+<h1 class="sideTitle">カテゴリー</h1>
 <?php
 $tags = $db->query('SELECT DISTINCT tag FROM article');
 $tags->execute();
@@ -159,11 +168,11 @@ foreach($tags as $tag):
 <?php endforeach; ?>
 
 </section>
-<section>
-<h1>最新記事</h1>
+<section class="box2">
+<h1 class="sideTitle">最新記事</h1>
 <hr>
 <?php 
-$posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,3');
+$posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,4');
 $posts_new->execute();
 ?>
 <?php foreach($posts_new as $post): ?>

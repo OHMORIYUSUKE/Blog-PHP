@@ -8,7 +8,7 @@
 学科：情報システム工学科
 ポートフォリオサイト：[リンク](http://utan.php.xdomain.jp/)
 サークル：[cistLTサークル](https://cist-lt-group.web.app/)
-趣味：アニメを見ること。VRCをたまにすること。
+趣味：アニメを見ること。VRCをたまにすること。Blenderとかも、
 ## githubの活動履歴
 <img src="https://raw.githubusercontent.com/OHMORIYUSUKE/OHMORIYUSUKE/main/profile-summary-card-output/vue/3-stats.svg" width="25%"><img src="https://raw.githubusercontent.com/OHMORIYUSUKE/OHMORIYUSUKE/main/profile-summary-card-output/vue/0-profile-details.svg" width="75%">
 <img src="https://raw.githubusercontent.com/OHMORIYUSUKE/OHMORIYUSUKE/main/profile-summary-card-output/vue/1-repos-per-language.svg" width="50%"><img src="https://raw.githubusercontent.com/OHMORIYUSUKE/OHMORIYUSUKE/main/profile-summary-card-output/vue/2-most-commit-language.svg" width="50%">
@@ -19,6 +19,12 @@
 - [おすすめアニメ【笑えるアニメランキング】](https://uu-tan.hatenablog.jp/entry/2020/11/11/110015)
 - [おすすめアニメ【感動するアニメランキング】](https://uu-tan.hatenablog.jp/entry/2020/11/10/234657)
 - [うーたんの自己紹介](https://uu-tan.hatenablog.jp/entry/2020/11/05/184728)
+
+## Blenderで作ったもの
+<div class="youtube">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UdRkqjRtTc0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
 ## Twitter
-メインアカウント　　　　　　　　VRC用アカウント
-<a class="twitter-timeline" data-width="250" data-height="400" data-theme="light" href="https://twitter.com/uutan1108?ref_src=twsrc%5Etfw">Tweets by u____tan_</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><a class="twitter-timeline" data-width="250" data-height="400" data-theme="light" href="https://twitter.com/rgSs28Q5ikifA0V?ref_src=twsrc%5Etfw">Tweets by rgSs28Q5ikifA0V</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<< メインアカウント | VRC用アカウント >>
+<a class="twitter-timeline" data-width="49%" data-height="500" data-theme="light" href="https://twitter.com/uutan1108?ref_src=twsrc%5Etfw">Tweets by u____tan_</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><a class="twitter-timeline" data-width="49%" data-height="500" data-theme="light" href="https://twitter.com/rgSs28Q5ikifA0V?ref_src=twsrc%5Etfw">Tweets by rgSs28Q5ikifA0V</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

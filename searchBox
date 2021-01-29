@@ -42,3 +42,12 @@ https://www.irasapofree.com/
 
 headのOGPのURLはすべて変更すること。
 共有ボタンのURLも変更すること。
+
+youtubeを挿入するときはdivで囲む
+<div class="youtube">
+</div>
+
+tweetを埋め込むとき
+左に余白をつけたいとき
+(>4つで中央)
+>>>> をつける。
