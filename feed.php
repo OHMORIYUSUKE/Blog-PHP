@@ -3,6 +3,13 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 ?>
 
 <?php
+//いつか使えるかもしれない
+// 1初期設定
+require_once("Michelf/Markdown.inc.php");
+use Michelf\Markdown;
+?>
+
+<?php
 require('dbconnect.php');
 require('hour.php');
 
@@ -52,6 +59,20 @@ $posts->execute();
 <![endif]-->
 </head>
 <body>
+<style type="text/css">
+      blockquote {
+        margin-left: 0.5em;
+        padding-left: 0.5em;
+        border-left: 1px solid #CCCCCC;
+      }
+      code{
+        display: block;
+        padding: 0.5em;
+        width: 100%;
+        background-color: #DDDDDD;
+        border: 1px dotted #666666;
+      }
+    </style>
 <header>
         <h1><a class="notext-decoration headerTitle" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
         <p class="headerSubTitle">うーたんのブログ</p>
@@ -82,6 +103,11 @@ $posts->execute();
       <div class="inline-block">
         <a href="searchTag.php?searchTag=<?php print($post['tag']);?>" class="tag"><?php print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); ?></a>
       </div>
+      <?php // 2HTMLへの変換
+        $text = $post['text'];
+        $html = Markdown::defaultTransform($text); 
+        print($html);
+        ?>
     </section>
 <?php endforeach; ?>
 
@@ -136,5 +162,6 @@ $posts_new->execute();
 <footer>
     Copyright © 2021 Ohmori Yusuke Blog All Rights Reserved.
     </footer>
+    <script src="app.js"></script>
 </body>
 </html>
