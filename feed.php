@@ -84,11 +84,14 @@ border: 1px dotted #666666;
 <ul>
 <li><a class="navTop" href="index.php">🏡 HOME</a></li>
 <li><a class="navTop" href="about.php">🧑 ABOUT</a></li>
+<li><a class="navTop" href="feed.php">📰 Feed</a></li>
 <li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio <img class="externalLink" src="images/external_link.png" alt="画像"></a></li>
 </ul>
 </nav>
 <article class="article">
-  <p class="counter">記事の総数：<?php print($cnt['cnt']);?>件</p>
+  <p class="counter">記事の総数：<?php print($cnt['cnt']);?>件
+  <a href="https://node2.feed43.com/4081510646200330.xml">Feed43<img class="externalLink" src="images/external_link.png" alt="画像"></a>
+  </p>
 <?php foreach($posts as $post): ?>
     <section>
         <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><h2><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></h2></a>
@@ -105,10 +108,12 @@ border: 1px dotted #666666;
       <div class="inline-block">
         <a href="searchTag.php?searchTag=<?php print($post['tag']);?>" class="tag"><?php print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); ?></a>
       </div>
+      <div>
       <?php
-$html=md2html($post['text']);
-print $html;
-?>
+        $html=md2html($post['text']);
+        print $html;
+        ?>
+      </div>
     </section>
 <?php endforeach; ?>
 

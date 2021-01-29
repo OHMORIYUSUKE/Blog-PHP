@@ -95,6 +95,7 @@ $title = '自己紹介します。';
         <ul>
             <li><a class="navTop" href="index.php">🏡 HOME</a></li>
             <li><a class="navTop" href="about.php">🧑 ABOUT</a></li>
+            <li><a class="navTop" href="feed.php">📰 Feed</a></li>
             <li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio <img class="externalLink" src="images/external_link.png" alt="画像"></a></li>
         </ul>
         </nav>
