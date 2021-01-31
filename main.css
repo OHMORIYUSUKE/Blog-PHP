@@ -73,6 +73,30 @@ footer {
     font-size: 80%;
 }
 
+/*検索ボックス*/
+.search_container{
+    box-sizing: border-box;
+    padding-bottom: 10px;
+  }
+  .search_container input[type="text"]{
+    background: #ccddf5;
+    border: none;
+    height: 3em;
+  }
+  .search_container input[type="text"]:focus {
+    outline: 0;
+  }
+  .search_container input[type="submit"]{
+    cursor: pointer;
+    font-family: FontAwesome;
+    border: none;
+    background: #6879D9;
+    color: #fff;
+    outline : none;
+    width: 5em;
+    height: 3em;
+  }
+
 
 /*--マークダウン用------------------------------*/
 table  { border-collapse: collapse; }
@@ -255,6 +279,10 @@ dt{
 @media screen and ( max-width:480px){
  
     /*　画面サイズが480px以下の場合ここの記述が適用される　*/
+    /*検索ボックス*/
+    .error{
+        font-size: 20px;
+    }
     div{
         font-size: 200%;
     }

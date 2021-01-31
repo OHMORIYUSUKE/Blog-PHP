@@ -5,8 +5,14 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 <?php
 require('dbconnect.php');
 require('hour.php');
+
 //URLパラメータで渡ってきたpage
+//$tagNameをHTMLにプリントしている
 $tagName = $_REQUEST['searchTag'];
+
+//$tagNameはHTMLにプリントするのに使っているため、代入しておく。
+//$_REQUEST['searchTag']はSQLに入れるためエスケープしておく
+$_REQUEST['searchTag'] = addcslashes($_REQUEST['searchTag'], '\_%');
 
 if(empty($_REQUEST['searchTag'])){
     header('Location: index.php');
@@ -37,7 +43,7 @@ $start = ($page - 1)*6;
 //データベースから取得
 $searchTagArticles = $db->prepare('SELECT * FROM article WHERE tag LIKE ? ORDER BY created DESC LIMIT ?,6');
 //LIKE ?に入るのはtagの名前である。
-$searchTagArticles->bindParam(1, $tagName, PDO::PARAM_STR, 12);
+$searchTagArticles->bindParam(1, $_REQUEST['searchTag'], PDO::PARAM_STR, 12);
 //LIMIT ?,5の?に入るのはint型ではないといけないので型指定できるbindParam(1, $start, PDO::PARAM_INT)を使う
 $searchTagArticles->bindParam(2, $start, PDO::PARAM_INT);
 $searchTagArticles->execute();
@@ -89,6 +95,7 @@ $date = date('Y/m/d', strtotime($post['created']));
 <h1>グローバルナビゲーション</h1>
 <ul>
 <li><a class="navTop" href="index.php">🏡 HOME</a></li>
+<li><a class="navTop" href="searchWord.php">🔍 Search</a></li>
 <li><a class="navTop" href="about.php">🧑 ABOUT</a></li>
 <li><a class="navTop" href="feed.php">📰 Feed</a></li>
 <li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio <img class="externalLink" src="images/external_link.png" alt="画像"></a></li>
