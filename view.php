@@ -11,12 +11,50 @@ if(empty($_REQUEST['id'])){
   exit();
 }
 
+//記事
 $posts = $db->prepare('SELECT * FROM article WHERE id=?');
 $posts->execute(array(
   $_REQUEST['id']
 ));
 $post = $posts->fetch();
 
+//コメントが入力されているかどうか
+if(!empty($_POST)){
+	//エラー判定
+	if($_POST['name'] === ''){
+		$errer['name']='blank';
+    }
+    if($_POST['comment'] === ''){
+		$errer['comment']='blank';
+    }
+}
+//コメント
+$comments = $db->prepare('SELECT * FROM comments WHERE article_id=? ORDER BY created DESC');
+$comments->execute(array(
+  $_REQUEST['id']
+));
+$comments->execute();
+
+//コメント投稿
+//if 投稿するボタンが押されたとき
+if(!empty($_POST)){
+    $URL = 'view.php?id='.$_REQUEST['id'];
+    //下のテキストエリアがname="comment"のため($_POST['comment']である
+    if($_POST['comment'] !== '' && $_POST['name'] !== ''){
+      $message = $db->prepare('INSERT INTO comments SET name=?, comment=?, article_id=?, created=NOW()');
+      $message->execute(array(
+        $_POST['name'],
+        $_POST['comment'],
+        $_REQUEST['id']
+      ));
+      header('Location:'.$URL);
+      //リロードされて同じメッセージが誤送信されることを防ぐ
+      exit();
+    }
+  }
+//<p>その投稿は削除されたか、URLが間違えています。</p>かどうかのフラグ
+//記事が存在するときは0
+  $noArticle = 0;
 //createdを整形する
 $date = date('Y/m/d', strtotime($post['created']));
 ?>
@@ -133,6 +171,7 @@ print('#'.htmlspecialchars($post['tag'], ENT_QUOTES));
 print(htmlspecialchars($post['text'], ENT_QUOTES)); 
 ?>
 <?php else: ?>
+<?php $noArticle = 1;?>
 ```C
 <p>その投稿は削除されたか、URLが間違えています。</p>
 
@@ -151,8 +190,53 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
     <li><a class="getpocket" href="http://getpocket.com/edit?url=http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>" rel="nofollow">Pocket</a></li>
     <li><a class="line" href="https://social-plugins.line.me/lineit/share?url=http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>">LINE</a></li>
 </ul>
-<br>
-<p class="toTop">&laquo; <a href="index.php">メインページへ</a></p>           
+
+<p class="toTop">&laquo; <a href="index.php">メインページへ</a></p>
+
+<?php if($noArticle == 0): ?>
+<p class="commentTitle"><img class="commentTitleImage" src="images/comment.png" alt="画像"> コメント</p>
+
+<form action="" method="post">
+      <dl>
+        <dt>お名前</dt>
+		<dd>
+        	<input type="text" name="name" size="60" maxlength="255" value="" />
+		</dd>
+        <?php
+		if ($errer['name'] === 'blank'):
+		?>
+		<p class="error">*お名前を入力してください。</p>
+		<?php endif;?>
+        <dt>コメント</dt>
+        <dd>
+          <textarea name="comment" cols="70" rows="5"></textarea>
+          <input type="hidden" name="reply_post_id" value="" />
+        </dd>
+        <?php
+		if ($errer['comment'] === 'blank'):
+		?>
+		<p class="error">*コメントを入力してください。</p>
+		<?php endif;?>
+      </dl>    
+        <p>
+          <input class="toukou" type="submit" value="投稿する" />
+        </p>     
+    </form>
+<?php endif; ?>
+    <?php //コメント表示 ?>
+    <?php foreach($comments as $comment): ?>
+    <?php 
+        $commentCreated = date('Y年m月d日 H:i',  strtotime($comment['created']));
+        ?>
+    <section class="commentObject">
+    <p>
+    <img class="commentImage" src="images/commenter.png" alt="画像">
+    <span class="commentName"><?php print(htmlspecialchars($comment['name'],ENT_QUOTES)); ?> より　</span>
+    <span class="commentCreated"><?php print(htmlspecialchars($commentCreated,ENT_QUOTES)); ?></span>
+    </p>
+    <p class="comment"><?php print(htmlspecialchars($comment['comment'],ENT_QUOTES)); ?></p>
+    </section>
+    <?php endforeach; ?>       
         </section>
             </article>
             <aside class="aside">

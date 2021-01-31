@@ -212,6 +212,45 @@ th     { background:#e0e0e0; }
     border-radius: 3px;
 }
 
+/*コメント欄******************/
+textarea {
+    resize: vertical;
+  }
+dt{
+    margin-inline-start:40px;
+}
+.error{
+    margin-inline-start:40px;
+    color: #F04052;
+}
+.toukou{
+    margin-inline-start:40px;
+}
+.commentObject{
+    margin-inline-start:40px;
+    border: none;
+    background-color: rgb(245, 245, 245);
+    width:87%
+}
+.commentImage{
+    width:8.8%;
+    vertical-align:middle;
+}
+.comment{
+    font-size: 22px;
+    margin-bottom: 0 !important;
+}
+.commentTitle{
+    font-size: 27px;
+    margin-inline-start:40px;
+}
+.commentTitleImage{
+    width:12%;
+}
+.toTop{
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
 
 @media screen and ( max-width:480px){
  
@@ -275,6 +314,14 @@ th     { background:#e0e0e0; }
     /*メインページ遷移する*/
     .toTop{
         font-size: 30px;
+    }
+    /*コメントのイラスト(吹き出し)*/
+    .commentTitleImage{
+        width:8%;
+    }
+    /*コメントの文字*/
+    .commentTitle{
+        font-size: 40px !important;
     }
     .article {
         float:'';  /*←article（メインブロック）はfloat:leftで左寄せに。*//*************************/

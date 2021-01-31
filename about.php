@@ -8,6 +8,41 @@ require('hour.php');
 $tag = '自己紹介';
 
 $title = '自己紹介します。';
+
+//aboutページのarticle_idは0
+
+//コメントが入力されているかどうか
+if(!empty($_POST)){
+	//エラー判定
+	if($_POST['name'] === ''){
+		$errer['name']='blank';
+    }
+    if($_POST['comment'] === ''){
+		$errer['comment']='blank';
+    }
+}
+//コメント
+$comments = $db->prepare('SELECT * FROM comments WHERE article_id=0 ORDER BY created DESC');
+//executeするとすべて取得
+$comments->execute();
+
+//コメント投稿
+//if 投稿するボタンが押されたとき
+if(!empty($_POST)){
+    //下のテキストエリアがname="message"のため($_POST['message']である
+    if($_POST['comment'] !== '' && $_POST['name'] !== ''){
+      $message = $db->prepare('INSERT INTO comments SET name=?, comment=?, article_id=0, created=NOW()');
+      $message->execute(array(
+        $_POST['name'],
+        $_POST['comment']
+      ));
+      $URL = 'about.php';
+      //messageをdbに保存したら再読み込みして$_POST['message']を削除する
+      //リロードされて同じメッセージが誤送信されることを防ぐ
+      header('Location:'.$URL);
+      exit();
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -157,8 +192,53 @@ fclose($fp);
     <li><a class="getpocket" href="http://getpocket.com/edit?url=http://utan.php.xdomain.jp/blog/about.php" rel="nofollow">Pocket</a></li>
     <li><a class="line" href="https://social-plugins.line.me/lineit/share?url=http://utan.php.xdomain.jp/blog/about.php">LINE</a></li>
 </ul>
-<br>
+
 <p class="toTop">&laquo; <a href="index.php">メインページへ</a></p> 
+
+
+<p class="commentTitle"><img class="commentTitleImage" src="images/comment.png" alt="画像"> コメント</p>
+
+<form action="" method="post">
+      <dl>
+        <dt>お名前</dt>
+		<dd>
+        	<input type="text" name="name" size="60" maxlength="255" value="" />
+		</dd>
+        <?php
+		if ($errer['name'] === 'blank'):
+		?>
+		<p class="error">*お名前を入力してください。</p>
+		<?php endif;?>
+        <dt>コメント</dt>
+        <dd>
+          <textarea name="comment" cols="70" rows="5"></textarea>
+          <input type="hidden" name="reply_post_id" value="" />
+        </dd>
+        <?php
+		if ($errer['comment'] === 'blank'):
+		?>
+		<p class="error">*コメントを入力してください。</p>
+		<?php endif;?>
+      </dl>    
+        <p>
+          <input class="toukou" type="submit" value="投稿する" />
+        </p>     
+    </form>
+
+    <?php //コメント表示 ?>
+    <?php foreach($comments as $comment): ?>
+    <?php 
+        $commentCreated = date('Y年m月d日 H:i',  strtotime($comment['created']));
+        ?>
+    <section class="commentObject">
+    <p>
+    <img class="commentImage" src="images/commenter.png" alt="画像">
+    <span class="commentName"><?php print(htmlspecialchars($comment['name'],ENT_QUOTES)); ?> より　</span>
+    <span class="commentCreated"><?php print(htmlspecialchars($commentCreated,ENT_QUOTES)); ?></span>
+    </p>
+    <p class="comment"><?php print(htmlspecialchars($comment['comment'],ENT_QUOTES)); ?></p>
+    </section>
+    <?php endforeach; ?>
 
         </section>
             </article>
