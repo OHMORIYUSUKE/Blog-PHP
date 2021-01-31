@@ -196,7 +196,7 @@ fclose($fp);
 <p class="toTop">&laquo; <a href="index.php">メインページへ</a></p> 
 
 
-<p class="commentTitle"><img class="commentTitleImage" src="images/comment.png" alt="画像"> コメント</p>
+<p class="commentTitle"><img class="commentTitleImage" src="images/comment.png" alt="画像"> コメント(現在フリープランのため動きません)</p>
 
 <form action="" method="post">
       <dl>

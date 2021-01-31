@@ -194,7 +194,7 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
 <p class="toTop">&laquo; <a href="index.php">メインページへ</a></p>
 
 <?php if($noArticle == 0): ?>
-<p class="commentTitle"><img class="commentTitleImage" src="images/comment.png" alt="画像"> コメント</p>
+<p class="commentTitle"><img class="commentTitleImage" src="images/comment.png" alt="画像"> コメント(現在フリープランのため動きません)</p>
 
 <form action="" method="post">
       <dl>
