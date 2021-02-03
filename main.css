@@ -72,7 +72,11 @@ footer {
     padding: 15px;
     font-size: 80%;
 }
-
+/*検索窓*/
+.searchInput{
+    width:75%;
+    margin-inline-start:40px;
+  }
 /*検索ボックス*/
 .search_container{
     box-sizing: border-box;
@@ -279,6 +283,17 @@ dt{
 @media screen and ( max-width:480px){
  
     /*　画面サイズが480px以下の場合ここの記述が適用される　*/
+    /*検索窓*/
+    .search_container input[type="text"]{
+        height: 2em;
+      }
+      .search_container input[type="submit"]{
+        width: 9em;
+        height: 4.2em;
+      }
+      .searchInput{
+          font-size: 1.7rem;
+      }
     /*検索ボックス*/
     .error{
         font-size: 20px;

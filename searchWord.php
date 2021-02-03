@@ -113,7 +113,7 @@ $date = date('Y/m/d', strtotime($post['created']));
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 <form method="get" class="search_container">
-<input type="text" name="search" size="40" placeholder="　キーワード検索"><input type="submit" value="&#xf002">
+<input class="searchInput" type="text" name="search" placeholder="　キーワード検索"><input type="submit" value="&#xf002">
 </form>
 
 <?php
