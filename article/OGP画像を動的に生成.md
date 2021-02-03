@@ -1,7 +1,7 @@
 ## OGP画像を動的に生成できるようにしました！！
 
 ↓こんな感じです。
-<img src="https://github.com/OHMORIYUSUKE/Blog-PHP/blob/master/article/images/%E3%82%8F%E3%81%9F%E3%81%97%E3%81%AE%E5%A5%BD%E3%81%8D%E3%81%AA%E3%82%A2%E3%83%8B%E3%83%A1/SHIROBAKO.png?raw=true" width="100%">
+<img src="https://github.com/OHMORIYUSUKE/Blog-PHP/blob/master/article/images/OGP%E7%94%BB%E5%83%8F%E3%82%92%E5%8B%95%E7%9A%84%E3%81%AB%E7%94%9F%E6%88%90/PHP17.png?raw=true" width="100%">
 
 画像に文字を書くには以下のコードで実装しました。  
 引数で`$title`(記事のタイトル)を渡すと、生成した画像のファイルパスを返すようにしました。`return($newfile);`
@@ -81,6 +81,6 @@ $newfile = OGP($post['title']);
 ```
 ↓生成された画像がレンタルサーバーに保存されています。  
 文字化けしていますが。
-<img src="https://github.com/OHMORIYUSUKE/Blog-PHP/blob/master/article/images/%E3%82%8F%E3%81%9F%E3%81%97%E3%81%AE%E5%A5%BD%E3%81%8D%E3%81%AA%E3%82%A2%E3%83%8B%E3%83%A1/SHIROBAKO.png?raw=true" width="100%">
+<img src="https://github.com/OHMORIYUSUKE/Blog-PHP/blob/master/article/images/OGP%E7%94%BB%E5%83%8F%E3%82%92%E5%8B%95%E7%9A%84%E3%81%AB%E7%94%9F%E6%88%90/PHP16.png?raw=true" width="100%">
 
 無料レンタルサーバーの使える機能を最大限に使っていきたい。
