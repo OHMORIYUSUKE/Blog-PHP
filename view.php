@@ -3,6 +3,7 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 ?>
 
 <?php
+require('geneOGP.php');
 require('dbconnect.php');
 require('hour.php');
 //URLパラメータを指定せずにアクセスしようとした場合はheader('Location: index.php');
@@ -17,6 +18,9 @@ $posts->execute(array(
   $_REQUEST['id']
 ));
 $post = $posts->fetch();
+
+//OGPを生成
+$newfile = OGP($post['title']);
 
 //コメントが入力されているかどうか
 if(!empty($_POST)){
@@ -72,13 +76,13 @@ $date = date('Y/m/d', strtotime($post['created']));
         <meta property="og:type" content="article">
         <meta property="og:description" content="😗< <?php print($post['title']); ?>">
         <meta property="og:url" content="http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>">
-        <meta property="og:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true">
+        <meta property="og:image" content="http://utan.php.xdomain.jp/blog/<?php print($newfile); ?>">
         <!-- <meta property="og:site_name" content="ポートフォリオ"> -->
 
         <!--twitterの設定-->
-        <meta name="twitter:card" content="summary">
+        <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>">
-        <meta name="twitter:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true" />
+        <meta name="twitter:image" content="http://utan.php.xdomain.jp/blog/<?php print($newfile); ?>" />
         <meta name="twitter:title" content="うーたんのブログ">
         <meta name="twitter:description" content="😗< <?php print('【#'.$post['tag'].'】'.$post['title']); ?>">
 
