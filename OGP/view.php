@@ -1,6 +1,6 @@
 <?php
 require('index.php');
-$title = 'タイトル';
+$title = '自己紹介します。';
 $newfile = OGP($title);
 ?>
 <!DOCTYPE html>
