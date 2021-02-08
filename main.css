@@ -18,6 +18,17 @@ h1{
     margin: 0 !important;
     padding: 1.3px !important;
 }
+.accessCount{
+    text-align:left;
+    float:left;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.eye{
+    width: 25px;
+    vertical-align: sub;
+    margin-right: 5px;
+}
 /*aタグの下線を消す*/
 .notext-decoration{
     text-decoration: none;
@@ -328,6 +339,9 @@ dt{
     /*時計画像*/
     .timeImage{
         width: 28px;
+    }
+    .eye{
+        width: 34px;
     }
     /*SNS共有*/
     .twitter{

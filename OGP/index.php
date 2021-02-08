@@ -1,8 +1,15 @@
 <?php 
 function OGP($title) {
+	$str=$title;
+	//正規表現でメモを分割する
+	preg_match_all('/[一-龠]+|[ぁ-ん]+|[ァ-ヴー]+|[a-zA-Z0-9]+|[ａ-ｚＡ-Ｚ０-９]+/u', $str, $matches);
+	$match_result = $matches[0];
+
+	print($match_result[0]);
+
 	$title = $title;
 	// 文字列を挿入する先の画像
-	$file = "OGP.jpg";
+	$file = "OGP2.jpg";
 	
 	// 出力後のファイル名
 	$newfile = 'OGPout/'.$title.'OGP.jpg';
@@ -19,13 +26,13 @@ function OGP($title) {
 	//レスポンシブにしました
 	//今年の振り返りと来年への抱負-2020-
 
-	//見た目の長さ 半角1全角2
-	$textLength = mb_strwidth($text);
+	// //見た目の長さ 半角1全角2
+	// $textLength = mb_strwidth($text);
 
-	$textWdth = $textLength*32;
-	//中央に文字列が来るように調整
+	// $textWdth = $textLength*32;
+	// //中央に文字列が来るように調整
 
-	$xp = 620 - ($textWdth / 2);
+	// $xp = 620 - ($textWdth / 2);
 
 	// 挿入する文字列のフォント(今回はWindowsに入ってたメイリオを使う)
 	$fontfile = "C:\Windows\Fonts\meiryo.ttc";
@@ -33,7 +40,7 @@ function OGP($title) {
 	//C:\Windows\Fonts\meiryo.ttc
 
 	// 挿入する文字列の色(白)
-	$color = imagecolorallocate($image, 0, 181, 253);//0, 181, 253
+	$color = imagecolorallocate($image, 255, 255, 255);//0, 181, 253
 	
 	// 挿入する文字列のサイズ(ピクセル)
 	$size = 50;
@@ -42,8 +49,8 @@ function OGP($title) {
 	$angle = 0;
 	
 	// 挿入位置
-	$x = $xp;         // 左からの座標(ピクセル)620が中央半角32px=64/2
-	$y = 300 + $size; // 上からの座標(ピクセル)
+	$x = 30;         // 左からの座標(ピクセル)620が中央半角32px=64/2
+	$y = 60 + $size; // 上からの座標(ピクセル)
 
 	/*
 	// 挿入位置

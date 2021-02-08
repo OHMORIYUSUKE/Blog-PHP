@@ -1,4 +1,6 @@
 <?php
+require('counter.php');
+require('counter_view.php');
 error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 ?>
 
@@ -20,7 +22,7 @@ $posts->execute(array(
 $post = $posts->fetch();
 
 //OGPを生成
-$newfile = OGP($post['title']);
+$newfile = OGP($_REQUEST['id']);
 
 //コメントが入力されているかどうか
 if(!empty($_POST)){
@@ -71,10 +73,20 @@ $date = date('Y/m/d', strtotime($post['created']));
 
         <link rel="icon" type="image/png" href="images/profile.jpg">
 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W0YW9MSGV"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-4W0YW9MSGV');
+        </script>
+
         <!--facebook & その他SNSの設定-->
         <meta property="og:title" content="うーたんのブログ">
         <meta property="og:type" content="article">
-        <meta property="og:description" content="😗< <?php print($post['title']); ?>">
+        <meta property="og:description" content="?< <?php print($post['title']); ?>">
         <meta property="og:url" content="http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>">
         <meta property="og:image" content="http://utan.php.xdomain.jp/blog/<?php print($newfile); ?>">
         <!-- <meta property="og:site_name" content="ポートフォリオ"> -->
@@ -84,7 +96,7 @@ $date = date('Y/m/d', strtotime($post['created']));
         <meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>">
         <meta name="twitter:image" content="http://utan.php.xdomain.jp/blog/<?php print($newfile); ?>" />
         <meta name="twitter:title" content="うーたんのブログ">
-        <meta name="twitter:description" content="😗< <?php print('【#'.$post['tag'].'】'.$post['title']); ?>">
+        <meta name="twitter:description" content="?< <?php print('【#'.$post['tag'].'】'.$post['title']); ?>">
 
         <link rel="stylesheet" type="text/css" href="main.css" media="all">
         
@@ -144,14 +156,15 @@ $date = date('Y/m/d', strtotime($post['created']));
         <header>
         <h1><a class="notext-decoration headerTitle" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
         <p class="headerSubTitle">うーたんのブログ</p>
+        <p>あなたは、<?php print($counter);?>人目の訪問者です。</p>
         </header>
         <nav>
         <ul>
-            <li><a class="navTop" href="index.php">🏡 HOME</a></li>
-            <li><a class="navTop" href="searchWord.php">🔍 Search</a></li>
-            <li><a class="navTop" href="about.php">🧑 ABOUT</a></li>
-            <li><a class="navTop" href="feed.php">📰 Feed</a></li>
-            <li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio <img class="externalLink" src="images/external_link.png" alt="画像"></a></li>
+          <li><a class="navTop" href="index.php">🏡 HOME</a></li>
+          <li><a class="navTop" href="searchWord.php">🔍 Search</a></li>
+          <li><a class="navTop" href="about.php">🧑 ABOUT</a></li>
+          <li><a class="navTop" href="feed.php">📰 Feed</a></li>
+          <li><a class="navTop" href="http://utan.php.xdomain.jp/">📝 Portfolio <img class="externalLink" src="images/external_link.png" alt="画像"></a></li>
         </ul>
         </nav>
     <article class="article">
@@ -160,10 +173,9 @@ $date = date('Y/m/d', strtotime($post['created']));
 <div>
 <!-- 指定されたURLパラメータが間違っていた場合(postはNULLである) -->
 <?php if($post): ?>
-
-<p class="time"><img class="timeImage" src="images/time.png" alt="画像"> <?php //print($created); 
+<p class="time"><span class="accessCount"><img class="eye" src="images/eye.png" alt="画像"><?php print($counter_view); ?> PV</span><img class="timeImage" src="images/time.png" alt="画像"> <?php //print($created); 
 print(htmlspecialchars($date, ENT_QUOTES)); 
-?></p>
+  ?></p>
 <h1 class="title"><?php //print($title); 
 print(htmlspecialchars($post['title'], ENT_QUOTES)); 
 ?></h1>
@@ -198,36 +210,7 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
 
 <p class="toTop">&laquo; <a href="index.php">メインページへ</a></p>
 
-<?php if($noArticle == 0): ?>
-<p class="commentTitle"><img class="commentTitleImage" src="images/comment.png" alt="画像"> コメント(現在フリープランのため動きません)</p>
 
-<form action="" method="post">
-      <dl>
-        <dt>お名前</dt>
-		<dd>
-        	<input type="text" name="name" size="60" maxlength="255" value="" />
-		</dd>
-        <?php
-		if ($errer['name'] === 'blank'):
-		?>
-		<p class="error">*お名前を入力してください。</p>
-		<?php endif;?>
-        <dt>コメント</dt>
-        <dd>
-          <textarea name="comment" cols="70" rows="5"></textarea>
-          <input type="hidden" name="reply_post_id" value="" />
-        </dd>
-        <?php
-		if ($errer['comment'] === 'blank'):
-		?>
-		<p class="error">*コメントを入力してください。</p>
-		<?php endif;?>
-      </dl>    
-        <p>
-          <input class="toukou" type="submit" value="投稿する" />
-        </p>     
-    </form>
-<?php endif; ?>
     <?php //コメント表示 ?>
     <?php foreach($comments as $comment): ?>
     <?php 

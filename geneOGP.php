@@ -1,11 +1,19 @@
 <?php 
-function OGP($title) {
-	$title = $title;
+function OGP($id) {
+	require('dbconnect.php');
+	//記事
+	$posts = $db->prepare('SELECT * FROM article WHERE id=?');
+	$posts->execute(array(
+		$id
+	));
+	$post = $posts->fetch();
+	//idからタイトル取得
+	$title = $post['title'];
 	// 文字列を挿入する先の画像
 	$file = "OGP.jpg";
 	
 	// 出力後のファイル名
-	$newfile = 'OGPout/'.$title.'OGP.jpg';
+	$newfile = 'OGPout/'.$id.'.jpg';
 	
 	// コピー先画像作成
 	$image = imagecreatefromjpeg($file);

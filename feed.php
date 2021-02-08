@@ -1,4 +1,5 @@
 <?php
+require('counter.php');
 error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 ?>
 
@@ -33,6 +34,16 @@ $posts->execute();
 <title>ブログ</title>
 
 <link rel="icon" type="image/png" href="images/profile.jpg">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4W0YW9MSGV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-4W0YW9MSGV');
+</script>
 
 <!--facebook & その他SNSの設定-->
 <meta property="og:title" content="うーたんのブログ">
@@ -78,6 +89,7 @@ border: 1px dotted #666666;
 <header>
         <h1><a class="notext-decoration headerTitle" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
         <p class="headerSubTitle">うーたんのブログ</p>
+        <p>あなたは、<?php print($counter);?>人目の訪問者です。</p>
         </header>
 <nav>
 <h1>グローバルナビゲーション</h1>
