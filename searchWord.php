@@ -81,13 +81,13 @@ $date = date('Y/m/d', strtotime($post['created']));
 <meta property="og:title" content="うーたんのブログ">
 <meta property="og:type" content="article">
 <meta property="og:description" content="😗< <?php print('見てね！'); ?>">
-<meta property="og:url" content="http://utan.php.xdomain.jp/blog/searchTag.php">
+<meta property="og:url" content="http://utan.php.xdomain.jp/blog/searchWord.php">
 <meta property="og:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true">
 <!-- <meta property="og:site_name" content="ポートフォリオ"> -->
 
 <!--twitterの設定-->
 <meta name="twitter:card" content="summary">
-<meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/searchTag.php">
+<meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/searchWord.php">
 <meta name="twitter:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true" />
 <meta name="twitter:title" content="うーたんのブログ">
 <meta name="twitter:description" content="😗< <?php print('見てね！'); ?>">
@@ -215,7 +215,20 @@ foreach($tags as $tag):
 <h1 class="sideTitle">最新記事</h1>
 <hr>
 <?php 
-$posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,4');
+$posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,3');
+$posts_new->execute();
+?>
+<?php foreach($posts_new as $post): ?>
+<a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></a>
+<br>
+<hr>
+<?php endforeach; ?>
+</section>
+<section class="box2">
+<h1 class="sideTitle">人気の記事</h1>
+<hr>
+<?php 
+$posts_new = $db->prepare('SELECT * FROM article ORDER BY count_view DESC LIMIT 0,3');
 $posts_new->execute();
 ?>
 <?php foreach($posts_new as $post): ?>

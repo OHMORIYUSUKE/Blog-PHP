@@ -6,6 +6,8 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 <?php
 require('dbconnect.php');
 require('hour.php');
+require('geneOGPindex.php');
+
 //URLパラメータで渡ってきたpage
 $page = $_REQUEST['page'];
 //URLパラメータで渡ってきたpageがnullだったら
@@ -29,6 +31,12 @@ $posts = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT ?,6');
 $posts->bindParam(1, $start, PDO::PARAM_INT);
 $posts->execute();
 
+//count_viewの合計
+$sql = "SELECT SUM(count_view) FROM article";
+$countallview = (int)$db->query($sql)->fetchColumn();
+
+//OGP作成
+$newfile = OGPindex($countallview,$cnt['cnt']);
 ?>
 
 <!DOCTYPE html>
@@ -53,14 +61,14 @@ $posts->execute();
 <meta property="og:title" content="うーたんのブログ">
 <meta property="og:type" content="article">
 <meta property="og:description" content="😗< <?php print('見てね！'); ?>">
-<meta property="og:url" content="http://utan.php.xdomain.jp/blog/searchTag.php">
-<meta property="og:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true">
+<meta property="og:url" content="http://utan.php.xdomain.jp/blog/index.php">
+<meta property="og:image" content="http://utan.php.xdomain.jp/blog/<?php print($newfile); ?>">
 <!-- <meta property="og:site_name" content="ポートフォリオ"> -->
 
 <!--twitterの設定-->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/searchTag.php">
-<meta name="twitter:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true" />
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/index.php">
+<meta name="twitter:image" content="http://utan.php.xdomain.jp/blog/<?php print($newfile); ?>" />
 <meta name="twitter:title" content="うーたんのブログ">
 <meta name="twitter:description" content="😗< <?php print('見てね！'); ?>">
 
@@ -170,7 +178,20 @@ foreach($tags as $tag):
 <h1 class="sideTitle">最新記事</h1>
 <hr>
 <?php 
-$posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,4');
+$posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,3');
+$posts_new->execute();
+?>
+<?php foreach($posts_new as $post): ?>
+<a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></a>
+<br>
+<hr>
+<?php endforeach; ?>
+</section>
+<section class="box2">
+<h1 class="sideTitle">人気の記事</h1>
+<hr>
+<?php 
+$posts_new = $db->prepare('SELECT * FROM article ORDER BY count_view DESC LIMIT 0,3');
 $posts_new->execute();
 ?>
 <?php foreach($posts_new as $post): ?>

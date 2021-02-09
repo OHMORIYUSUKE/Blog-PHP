@@ -96,7 +96,7 @@ $date = date('Y/m/d', strtotime($post['created']));
         <meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>">
         <meta name="twitter:image" content="http://utan.php.xdomain.jp/blog/<?php print($newfile); ?>" />
         <meta name="twitter:title" content="うーたんのブログ">
-        <meta name="twitter:description" content="?< <?php print('【#'.$post['tag'].'】'.$post['title']); ?>">
+        <meta name="twitter:description" content="😗< <?php print('【#'.$post['tag'].'】'.$post['title']); ?>">
 
         <link rel="stylesheet" type="text/css" href="main.css" media="all">
         
@@ -263,7 +263,7 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
     <h1 class="sideTitle">最新記事</h1>
         <hr>
         <?php 
-        $posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,4');
+        $posts_new = $db->prepare('SELECT * FROM article ORDER BY created DESC LIMIT 0,3');
         $posts_new->execute();
         ?>
         <?php foreach($posts_new as $post): ?>
@@ -271,6 +271,19 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
         <br>
         <hr>
         <?php endforeach; ?>
+    </section>
+    <section class="box2">
+    <h1 class="sideTitle">人気の記事</h1>
+    <hr>
+    <?php 
+    $posts_new = $db->prepare('SELECT * FROM article ORDER BY count_view DESC LIMIT 0,3');
+    $posts_new->execute();
+    ?>
+    <?php foreach($posts_new as $post): ?>
+    <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></a>
+    <br>
+    <hr>
+    <?php endforeach; ?>
     </section>
     </aside>
     <button class="scroll-top" id="js-button"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
