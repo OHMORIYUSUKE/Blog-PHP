@@ -164,8 +164,13 @@ if ($errer === 'blank'):
       </a>
     </li>
     <?php else: ?>
+    <li class="page-item">
       <span aria-hidden="true">　　　　　　　</span>
+    </li>
     <?php endif; ?>
+    <li class="page-item">
+      <?php print($page); ?>/<?php print($maxPage); ?>
+    </li>
     <?php if($page < $maxPage): ?>
     <li class="page-item">
       <a class="page-link" href="searchWord.php?search=<?php print($search ); ?>&page=<?php print($page + 1); ?>" aria-label="Next">
@@ -173,7 +178,9 @@ if ($errer === 'blank'):
       </a>&raquo;
     </li>
     <?php else: ?>
+    <li class="page-item">
       <span aria-hidden="true">　　　　　　　</span>
+    </li>
     <?php endif; ?>
   </ul>
 </nav>
@@ -235,6 +242,30 @@ $posts_new->execute();
 <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></a>
 <br>
 <hr>
+<?php endforeach; ?>
+</section>
+<section class="box2">
+<h1 class="sideTitle">アーカイブ</h1>
+<hr>
+<?php 
+$posts_new = $db->prepare('SELECT * FROM article ORDER BY created');
+$posts_new->execute();
+
+$createds = array();
+?>
+<?php foreach($posts_new as $post): ?>
+<?php
+  $date = new DateTime($post['created']);
+  $created = $date->format('Y-m'); // 2014-08-01 23:01:05 -> Y/m
+
+  $createds[] = $created;
+  ?>
+<?php endforeach; ?>
+<?php
+$createds = array_unique($createds);
+
+foreach($createds as $value):?>
+  <a class="tag tagSide" href="searchArchive.php?searchArchive=<?php print($value); ?>"><?php print($value); ?></a>
 <?php endforeach; ?>
 </section>
 </aside>

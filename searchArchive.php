@@ -4,27 +4,66 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 ?>
 
 <?php
-require_once "Parsedown.php";
-function md2html($md){
-    $Parsedown = new Parsedown();
-    $html = $Parsedown->text($md);
-    return $html;
-  }
-?>
-
-<?php
 require('dbconnect.php');
 require('hour.php');
+require('geneOGPindex.php');
+
+$_REQUEST['searchArchive'] = addcslashes($_REQUEST['searchArchive'], '\_%');
+
+if(empty($_REQUEST['searchArchive'])){
+    header('Location: index.php');
+    exit();
+  }
+
+//URLパラメータで渡ってきたpage
+$page = $_REQUEST['page'];
+//URLパラメータで渡ってきたpageがnullだったら
+if($page == ''){
+  $page = 1;
+}
+//$pageが1より小さかったら$page=1
+$page = max($page,1);
+
+//指定された月とそのよく月の記事を取得す
+
+//2021-01を2021-01-01 00:00:00にする
+$first_date = $_REQUEST['searchArchive'].'-01 00:00:00';
+
+//月末計算 指定された月のよく月を求める
+//https://qiita.com/re-24/items/c3ed814f2e1ee0f8e811
+$date = new DateTime($first_date);
+$last_date = $date->modify('last day of this months');
+$last_date = $last_date->format('Y-m-d H:i:s');
 
 
-//dbからコメントの総数を取る
-$counts = $db->query('SELECT COUNT(*) AS cnt FROM article');
-$cnt = $counts->fetch(); //SQLたたいたらfetch()する
+$counts = $db->prepare('SELECT COUNT(*) AS cnt FROM article WHERE created BETWEEN ? AND ?');
+//$cnt = $counts->fetch();
+$counts->execute(array(
+    $first_date,
+    $last_date
+  ));
+$cnt = $counts->fetch();
+$maxPage = ceil($cnt['cnt'] / 6); //切り上げ
+$page = min($page,$maxPage); //$page>$maxPageだったら $page = $maxPage
+
+//ページネーションの計算
+$start = ($page - 1)*6;
 
 //データベースから取得
-$posts = $db->query('SELECT * FROM article ORDER BY created DESC');
+$posts = $db->prepare('SELECT * FROM article WHERE created BETWEEN ? AND ? ORDER BY created DESC LIMIT ?,6');
+//LIKE ?に入るのはtagの名前である。
+$posts->bindParam(1, $first_date, PDO::PARAM_STR, 12);
+$posts->bindParam(2, $last_date, PDO::PARAM_STR, 12);
+//LIMIT ?,5の?に入るのはint型ではないといけないので型指定できるbindParam(1, $start, PDO::PARAM_INT)を使う
+$posts->bindParam(3, $start, PDO::PARAM_INT);
 $posts->execute();
 
+//count_viewの合計
+$sql = "SELECT SUM(count_view) FROM article";
+$countallview = (int)$db->query($sql)->fetchColumn();
+
+//OGP作成
+$newfile = OGPindex($countallview,$cnt['cnt']);
 ?>
 
 <!DOCTYPE html>
@@ -49,13 +88,13 @@ $posts->execute();
 <meta property="og:title" content="うーたんのブログ">
 <meta property="og:type" content="article">
 <meta property="og:description" content="😗< <?php print('見てね！'); ?>">
-<meta property="og:url" content="http://utan.php.xdomain.jp/blog/feed.php">
+<meta property="og:url" content="http://utan.php.xdomain.jp/blog/searchArchive.php">
 <meta property="og:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true">
 <!-- <meta property="og:site_name" content="ポートフォリオ"> -->
 
 <!--twitterの設定-->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/feed.php">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/searchArchive.php">
 <meta name="twitter:image" content="https://github.com/OHMORIYUSUKE/mini_bbs/blob/master/member_picture/20210117010058YcFl9Nuw_400x400.jpg?raw=true" />
 <meta name="twitter:title" content="うーたんのブログ">
 <meta name="twitter:description" content="😗< <?php print('見てね！'); ?>">
@@ -72,20 +111,6 @@ $posts->execute();
 <![endif]-->
 </head>
 <body>
-<style type="text/css">
-blockquote {
-margin-left: 0.5em;
-padding-left: 0.5em;
-border-left: 1px solid #CCCCCC;
-}
-code{
-display: block;
-padding: 0.5em;
-width: 100%;
-background-color: #DDDDDD;
-border: 1px dotted #666666;
-}
-</style>
 <header>
         <h1><a class="notext-decoration headerTitle" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
         <p class="headerSubTitle">うーたんのブログ</p>
@@ -102,9 +127,14 @@ border: 1px dotted #666666;
 </ul>
 </nav>
 <article class="article">
-  <p class="counter">記事の総数：<?php print($cnt['cnt']);?>件
-  <a href="https://node2.feed43.com/4081510646200330.xml">Feed43<img class="externalLink" src="images/external_link.png" alt="画像"></a>
-  </p>
+<?php
+//2021-01-01 00:00:00をいい感じにする
+$date = new DateTime($first_date);
+$first_dateF = $date->format('Y-m-d');
+$date = new DateTime($last_date);
+$last_dateF = $date->format('Y-m-d');
+?>
+  <p class="counter"><?php print($first_dateF.' から '.$last_dateF);?> の記事：<?php print($cnt['cnt']);?>件</p>
 <?php foreach($posts as $post): ?>
     <section>
         <a href="view.php?id=<?php print(htmlspecialchars($post['id'], ENT_QUOTES)); ?>" class="view_title"><h2><?php print(htmlspecialchars($post['title'], ENT_QUOTES)); ?></h2></a>
@@ -121,15 +151,37 @@ border: 1px dotted #666666;
       <div class="inline-block">
         <a href="searchTag.php?searchTag=<?php print($post['tag']);?>" class="tag"><?php print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); ?></a>
       </div>
-      <div>
-      <?php
-        $html=md2html($post['text']);
-        print $html;
-        ?>
-      </div>
     </section>
 <?php endforeach; ?>
-
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+  <?php if($page > 1): ?>
+    <li class="page-item">
+    &laquo;<a class="page-link" href="searchArchive.php?searchArchive=<?php print($_REQUEST['searchArchive'] ); ?>&page=<?php print($page - 1); ?>" aria-label="Previous">
+        <span aria-hidden="true">前のページへ</span>
+      </a>
+    </li>
+    <?php else: ?>
+    <li class="page-item">
+      <span aria-hidden="true">　　　　　　　</span>
+    </li>
+    <?php endif; ?>
+    <li class="page-item">
+      <?php print($page); ?>/<?php print($maxPage); ?>
+    </li>
+    <?php if($page < $maxPage): ?>
+    <li class="page-item">
+      <a class="page-link" href="searchArchive.php?searchArchive=<?php print($_REQUEST['searchArchive'] ); ?>&page=<?php print($page + 1); ?>" aria-label="Next">
+        <span aria-hidden="true">次のページへ</span>
+      </a>&raquo;
+    </li>
+    <?php else: ?>
+    <li class="page-item">
+      <span aria-hidden="true">　　　　　　　</span>
+    </li>
+    <?php endif; ?>
+  </ul>
+</nav>
 </article>
 <aside class="aside">
     <section class="box">
@@ -200,17 +252,17 @@ $createds = array();
 ?>
 <?php foreach($posts_new as $post): ?>
 <?php
-$date = new DateTime($post['created']);
-$created = $date->format('Y-m'); // 2014-08-01 23:01:05 -> Y/m
+  $date = new DateTime($post['created']);
+  $created = $date->format('Y-m'); // 2014-08-01 23:01:05 -> Y/m
 
-$createds[] = $created;
-?>
+  $createds[] = $created;
+  ?>
 <?php endforeach; ?>
 <?php
 $createds = array_unique($createds);
 
 foreach($createds as $value):?>
-<a class="tag tagSide" href="searchArchive.php?searchArchive=<?php print($value); ?>"><?php print($value); ?></a>
+  <a class="tag tagSide" href="searchArchive.php?searchArchive=<?php print($value); ?>"><?php print($value); ?></a>
 <?php endforeach; ?>
 </section>
 </aside>
@@ -218,6 +270,7 @@ foreach($createds as $value):?>
 <footer>
     Copyright © 2021 Ohmori Yusuke Blog All Rights Reserved.
     </footer>
+
     <script src="app.js"></script>
 </body>
 </html>

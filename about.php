@@ -286,6 +286,30 @@ fclose($fp);
     <hr>
     <?php endforeach; ?>
     </section>
+    <section class="box2">
+    <h1 class="sideTitle">アーカイブ</h1>
+    <hr>
+    <?php 
+    $posts_new = $db->prepare('SELECT * FROM article ORDER BY created');
+    $posts_new->execute();
+
+    $createds = array();
+    ?>
+    <?php foreach($posts_new as $post): ?>
+    <?php
+    $date = new DateTime($post['created']);
+    $created = $date->format('Y-m'); // 2014-08-01 23:01:05 -> Y/m
+
+    $createds[] = $created;
+    ?>
+    <?php endforeach; ?>
+    <?php
+    $createds = array_unique($createds);
+
+    foreach($createds as $value):?>
+    <a class="tag tagSide" href="searchArchive.php?searchArchive=<?php print($value); ?>"><?php print($value); ?></a>
+    <?php endforeach; ?>
+    </section>
     </aside>
     <button class="scroll-top" id="js-button"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
     <footer>
