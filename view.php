@@ -63,6 +63,15 @@ if(!empty($_POST)){
   $noArticle = 0;
 //createdを整形する
 $date = date('Y/m/d', strtotime($post['created']));
+
+//カウンター画像に
+//4けたに
+$counter = str_pad($counter, 4, '0', STR_PAD_LEFT);
+//1桁ずつに分割
+$counter_array = str_split($counter);
+
+$counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src="images/7seg/'.$counter_array[1].'.png" alt=""><img src="images/7seg/'.$counter_array[2].'.png" alt=""><img src="images/7seg/'.$counter_array[3].'.png" alt="">';
+
 ?>
 
 <!DOCTYPE html>
@@ -156,7 +165,7 @@ $date = date('Y/m/d', strtotime($post['created']));
         <header>
         <h1><a class="notext-decoration headerTitle" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
         <p class="headerSubTitle">うーたんのブログ</p>
-        <p>あなたは、<?php print($counter);?>人目の訪問者です。</p>
+        <p>あなたは、<?php print($counterImg);?>人目の訪問者です。</p>
         </header>
         <nav>
         <ul>

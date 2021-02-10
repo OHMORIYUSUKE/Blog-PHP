@@ -27,6 +27,15 @@ $comments = $db->prepare('SELECT * FROM comments WHERE article_id=0 ORDER BY cre
 //executeするとすべて取得
 $comments->execute();
 
+//カウンター画像に
+//4けたに
+$counter = str_pad($counter, 4, '0', STR_PAD_LEFT);
+//1桁ずつに分割
+$counter_array = str_split($counter);
+
+$counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src="images/7seg/'.$counter_array[1].'.png" alt=""><img src="images/7seg/'.$counter_array[2].'.png" alt=""><img src="images/7seg/'.$counter_array[3].'.png" alt="">';
+
+
 //コメント投稿
 //if 投稿するボタンが押されたとき
 if(!empty($_POST)){
@@ -136,7 +145,7 @@ if(!empty($_POST)){
         <header>
         <h1><a class="notext-decoration headerTitle" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
         <p class="headerSubTitle">うーたんのブログ</p>
-        <p>あなたは、<?php print($counter);?>人目の訪問者です。</p>
+        <p>あなたは、<?php print($counterImg);?>人目の訪問者です。</p>
         </header>
         <nav>
         <ul>

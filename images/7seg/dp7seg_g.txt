@@ -1,0 +1,7 @@
+Description : Digit PNGs for counter programs
+Name        : 7-segment LED (Green)
+Author      : Kan-chan  <kan-chan@innocent.com>
+
+This is freeware.  Please feel free to use and copy it.
+Author's web site is at http://welcome.to/hanagoyomi
+[EOF]
