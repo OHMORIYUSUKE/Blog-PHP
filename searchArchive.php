@@ -32,7 +32,7 @@ $first_date = $_REQUEST['searchArchive'].'-01 00:00:00';
 //月末計算 指定された月のよく月を求める
 //https://qiita.com/re-24/items/c3ed814f2e1ee0f8e811
 $date = new DateTime($first_date);
-$last_date = $date->modify('last day of this months');
+$last_date = $date->modify('first day of next months');//よく月の1日
 $last_date = $last_date->format('Y-m-d H:i:s');
 
 
@@ -141,7 +141,11 @@ $counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src=
 $date = new DateTime($first_date);
 $first_dateF = $date->format('Y-m-d');
 $date = new DateTime($last_date);
-$last_dateF = $date->format('Y-m-d');
+$last_dateF = $date->modify('-1 days')->format('Y-m-d');//１日前にする
+/**
+ * 2020 1/1 00:00~1/31 00:00を取得するため31日に空白が生まれ31日の記事がヒットしなくなってしまった
+ * 2020 1/1 00:00~2/1 00:00を取得することで31日の記事も取得できるようにした。
+ */
 ?>
   <p class="counter"><?php print($first_dateF.' から '.$last_dateF);?> の記事：<?php print($cnt['cnt']);?>件</p>
 <?php foreach($posts as $post): ?>
@@ -213,6 +217,7 @@ $last_dateF = $date->format('Y-m-d');
 
 <section class="box2">
 <h1 class="sideTitle">カテゴリー</h1>
+<hr>
 <?php
 $tags = $db->query('SELECT DISTINCT tag FROM article');
 $tags->execute();

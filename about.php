@@ -258,6 +258,7 @@ fclose($fp);
 
     <section class="box2">
     <h1 class="sideTitle">カテゴリー</h1>
+    <hr>
     <?php
     $tags = $db->query('SELECT DISTINCT tag FROM article');
     $tags->execute();

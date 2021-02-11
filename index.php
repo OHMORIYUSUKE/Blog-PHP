@@ -179,6 +179,7 @@ $counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src=
 
 <section class="box2">
 <h1 class="sideTitle">カテゴリー</h1>
+<hr>
 <?php
 $tags = $db->query('SELECT DISTINCT tag FROM article');
 $tags->execute();
