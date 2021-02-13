@@ -3,7 +3,7 @@ function OGPindex($counter,$cnt) {
 	require('dbconnect.php');
 	
 	//idからタイトル取得
-	$title = '記事:'.$cnt.'件 合計:'.$counter.'PV';
+	$title = '記事:'.$cnt.'件 訪問者:'.$counter.'人';
 	// 文字列を挿入する先の画像
 	$file = "OGP.jpg";
 	

@@ -36,7 +36,7 @@ $sql = "SELECT SUM(count_view) FROM article";
 $countallview = (int)$db->query($sql)->fetchColumn();
 
 //OGP作成
-$newfile = OGPindex($countallview,$cnt['cnt']);
+$newfile = OGPindex($counter,$cnt['cnt']);
 
 //カウンター画像に
 //4けたに
