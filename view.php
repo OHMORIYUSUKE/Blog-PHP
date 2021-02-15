@@ -1,12 +1,26 @@
 <?php
+require('dbconnect.php');
+//コメント投稿
+//if 投稿するボタンが押されたとき
+if(!empty($_POST)){
+  $URL = 'view.php?id='.$_REQUEST['id'];
+  //下のテキストエリアがname="comment"のため($_POST['comment']である
+  if($_POST['comment'] !== '' && $_POST['name'] !== ''){
+    $message = $db->prepare('INSERT INTO comments SET commenter_name=?, comment=?, article_id=?, created=NOW()');
+    $message->execute(array(
+      $_POST['name'],
+      $_POST['comment'],
+      $_REQUEST['id']
+    ));
+    header('Location:'.$URL);
+    //リロードされて同じメッセージが誤送信されることを防ぐ
+    exit();
+  }
+}
 require('counter.php');
 require('counter_view.php');
 error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
-?>
-
-<?php
 require('geneOGP.php');
-require('dbconnect.php');
 require('hour.php');
 //URLパラメータを指定せずにアクセスしようとした場合はheader('Location: index.php');
 if(empty($_REQUEST['id'])){
@@ -41,23 +55,6 @@ $comments->execute(array(
 ));
 $comments->execute();
 
-//コメント投稿
-//if 投稿するボタンが押されたとき
-if(!empty($_POST)){
-    $URL = 'view.php?id='.$_REQUEST['id'];
-    //下のテキストエリアがname="comment"のため($_POST['comment']である
-    if($_POST['comment'] !== '' && $_POST['name'] !== ''){
-      $message = $db->prepare('INSERT INTO comments SET name=?, comment=?, article_id=?, created=NOW()');
-      $message->execute(array(
-        $_POST['name'],
-        $_POST['comment'],
-        $_REQUEST['id']
-      ));
-      header('Location:'.$URL);
-      //リロードされて同じメッセージが誤送信されることを防ぐ
-      exit();
-    }
-  }
 //<p>その投稿は削除されたか、URLが間違えています。</p>かどうかのフラグ
 //記事が存在するときは0
   $noArticle = 0;
@@ -95,7 +92,7 @@ $counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src=
         <!--facebook & その他SNSの設定-->
         <meta property="og:title" content="うーたんのブログ">
         <meta property="og:type" content="article">
-        <meta property="og:description" content="?< <?php print($post['title']); ?>">
+        <meta property="og:description" content="😗< <?php print($post['title']); ?>">
         <meta property="og:url" content="http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>">
         <meta property="og:image" content="http://utan.php.xdomain.jp/blog/<?php print($newfile); ?>">
         <!-- <meta property="og:site_name" content="ポートフォリオ"> -->
@@ -219,6 +216,33 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
 
 <p class="toTop">&laquo; <a href="index.php">メインページへ</a></p>
 
+<p class="commentTitle"><img class="commentTitleImage" src="images/comment.png" alt="画像"> コメント</p>
+
+<form action="" method="post">
+      <dl>
+        <dt class="commentInputNameTitle">お名前</dt>
+		<dd>
+        	<input class="commentInputName" type="text" name="name" maxlength="20"/>
+		</dd>
+        <?php
+		if ($errer['name'] === 'blank'):
+		?>
+		<p class="error">*お名前を入力してください。</p>
+		<?php endif;?>
+        <dt class="commentInputCommentTitle">コメント</dt>
+        <dd>
+          <textarea class="textCommentlines" name="comment"></textarea>
+        </dd>
+        <?php
+		if ($errer['comment'] === 'blank'):
+		?>
+		<p class="error">*コメントを入力してください。</p>
+		<?php endif;?>
+      </dl>    
+        <p>
+          <input class="toukou" type="submit" value="投稿する" />
+        </p>     
+    </form>
 
     <?php //コメント表示 ?>
     <?php foreach($comments as $comment): ?>
@@ -228,7 +252,7 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
     <section class="commentObject">
     <p>
     <img class="commentImage" src="images/commenter.png" alt="画像">
-    <span class="commentName"><?php print(htmlspecialchars($comment['name'],ENT_QUOTES)); ?> より　</span>
+    <span class="commentName"><?php print(htmlspecialchars($comment['commenter_name'],ENT_QUOTES)); ?> より　</span>
     <span class="commentCreated"><?php print(htmlspecialchars($commentCreated,ENT_QUOTES)); ?></span>
     </p>
     <p class="comment"><?php print(htmlspecialchars($comment['comment'],ENT_QUOTES)); ?></p>
