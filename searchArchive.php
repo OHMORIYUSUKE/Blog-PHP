@@ -1,19 +1,15 @@
 <?php
 require('counter.php');
 error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
-?>
-
-<?php
+if(empty($_REQUEST['searchArchive'])){
+  header('Location: index.php');
+  exit();
+}
 require('dbconnect.php');
 require('hour.php');
 require('geneOGPindex.php');
 
 $_REQUEST['searchArchive'] = addcslashes($_REQUEST['searchArchive'], '\_%');
-
-if(empty($_REQUEST['searchArchive'])){
-    header('Location: index.php');
-    exit();
-  }
 
 //URLパラメータで渡ってきたpage
 $page = $_REQUEST['page'];
