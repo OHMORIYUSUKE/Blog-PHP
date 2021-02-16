@@ -17,16 +17,16 @@ if(!empty($_POST)){
     exit();
   }
 }
-require('counter.php');
-require('counter_view.php');
-error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
-require('geneOGP.php');
-require('hour.php');
 //URLパラメータを指定せずにアクセスしようとした場合はheader('Location: index.php');
 if(empty($_REQUEST['id'])){
   header('Location: index.php');
   exit();
 }
+require('counter.php');
+require('counter_view.php');
+error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
+require('geneOGP.php');
+require('hour.php');
 
 //記事
 $posts = $db->prepare('SELECT * FROM article WHERE id=?');

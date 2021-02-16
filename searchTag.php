@@ -1,9 +1,10 @@
 <?php
 require('counter.php');
 error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
-?>
-
-<?php
+if(empty($_REQUEST['searchTag'])){
+  header('Location: index.php');
+  exit();
+}
 require('dbconnect.php');
 require('hour.php');
 
@@ -15,10 +16,6 @@ $tagName = $_REQUEST['searchTag'];
 //$_REQUEST['searchTag']はSQLに入れるためエスケープしておく
 $_REQUEST['searchTag'] = addcslashes($_REQUEST['searchTag'], '\_%');
 
-if(empty($_REQUEST['searchTag'])){
-    header('Location: index.php');
-    exit();
-  }
 
 $page = $_REQUEST['page'];
 //URLパラメータで渡ってきたpageがnullだったら
