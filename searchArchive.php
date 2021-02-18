@@ -6,6 +6,26 @@ if(empty($_REQUEST['searchArchive'])){
   exit();
 }
 require('dbconnect.php');
+//2021-01を2021-01-01 00:00:00にする
+$first_date = $_REQUEST['searchArchive'].'-01 00:00:00';
+try{
+//月末計算 指定された月のよく月を求める
+//https://qiita.com/re-24/items/c3ed814f2e1ee0f8e811
+$date = new DateTime($first_date);
+$last_date = $date->modify('first day of next months');//よく月の1日
+$last_date = $last_date->format('Y-m-d H:i:s');
+}catch( Exception $e )
+{
+    header('Location: index.php');
+}
+$counts = $db->prepare('SELECT COUNT(*) AS cnt FROM article WHERE created BETWEEN ? AND ?');
+//$cnt = $counts->fetch();
+$counts->execute(array(
+    $first_date,
+    $last_date
+  ));
+$cnt = $counts->fetch();
+
 require('hour.php');
 require('geneOGPindex.php');
 
@@ -22,23 +42,6 @@ $page = max($page,1);
 
 //指定された月とそのよく月の記事を取得す
 
-//2021-01を2021-01-01 00:00:00にする
-$first_date = $_REQUEST['searchArchive'].'-01 00:00:00';
-
-//月末計算 指定された月のよく月を求める
-//https://qiita.com/re-24/items/c3ed814f2e1ee0f8e811
-$date = new DateTime($first_date);
-$last_date = $date->modify('first day of next months');//よく月の1日
-$last_date = $last_date->format('Y-m-d H:i:s');
-
-
-$counts = $db->prepare('SELECT COUNT(*) AS cnt FROM article WHERE created BETWEEN ? AND ?');
-//$cnt = $counts->fetch();
-$counts->execute(array(
-    $first_date,
-    $last_date
-  ));
-$cnt = $counts->fetch();
 $maxPage = ceil($cnt['cnt'] / 6); //切り上げ
 $page = min($page,$maxPage); //$page>$maxPageだったら $page = $maxPage
 
@@ -79,6 +82,8 @@ $counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src=
 
 <link rel="icon" type="image/png" href="images/profile.jpg">
 
+<meta name="theme-color" content="#fff">
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W0YW9MSGV"></script>
 <script>
@@ -105,7 +110,7 @@ $counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src=
 <meta name="twitter:description" content="😗< <?php print('見てね！'); ?>">
 
 <!-- jQuery-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
 <!--レスポンシブ-->
 <meta name="viewport" content="width=device-width">
@@ -116,6 +121,15 @@ $counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src=
 <![endif]-->
 </head>
 <body>
+<script>
+    //白い画面を見せない
+    var result = document.cookie.indexOf('dark');
+    if (result != -1) {
+        $("body").css({
+            backgroundColor: "black",
+        });
+    }
+</script>
 <header>
         <h1><a class="notext-decoration headerTitle" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
         <p class="headerSubTitle">うーたんのブログ</p>
@@ -201,7 +215,7 @@ $last_dateF = $date->modify('-1 days')->format('Y-m-d');//１日前にする
       </div>
       <div class="inline-block1">
         <!-- <img src="images/external_link.png" alt="画像" width="14%"> -->
-        <p class="sns_text">SNS</p>
+        <p class="sns_text"></p>
         <a href="https://twitter.com/uutan1108"><img class="sns" src="images/twitter.png" alt="画像"></a>
         <a href="https://github.com/OHMORIYUSUKE"><img class="sns" src="images/github.png" alt="画像"></a>
         <a href="mailto:b2190350@photon.chitose.ac.jp"><img class="sns" src="images/gmail.png" alt="画像"></a>
@@ -276,6 +290,7 @@ foreach($createds as $value):?>
 <?php endforeach; ?>
 </section>
 </aside>
+<button class="dark" onclick="dark();">🌙</button>
 <button class="scroll-top" id="js-button"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
 <footer>
     Copyright © 2021 Ohmori Yusuke Blog All Rights Reserved.

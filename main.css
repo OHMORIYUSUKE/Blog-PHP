@@ -1,4 +1,55 @@
 @charset "utf-8";
+.loading {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+/*
+margin: 50vh auto 0;
+transform: translateY(-50%);
+text-align: center;
+*/
+
+/*パソコン*/
+.loading img {
+  width: 150px;
+  margin: 50vh auto 0;
+  transform: translateY(-50%);
+  text-align: center;
+  z-index: 99;
+}
+/*スマホ*/
+@media screen and (min-width: 768px) {
+  .loading img {
+    width: 50px;
+  }
+}
+
+.fa-chevron-up:before {
+  content: "\f102" !important;
+  font-size: 40px;
+}
+.dark {
+  margin-bottom: 70px;
+  font-size: 25px;
+  cursor: pointer;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 100;
+  background-color: black;
+  opacity: 0.8;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  color: #fff;
+}
 html {
   box-sizing: border-box;
 }
@@ -24,6 +75,9 @@ html {
 h1 {
   margin: 0 !important;
   padding: 1.3px !important;
+}
+.sideTitle {
+  text-align: center;
 }
 .accessCount {
   text-align: left;
@@ -202,9 +256,11 @@ th {
 .profile {
   width: 100%;
   height: 100%;
+  border-radius: 50%;
 }
 .prof {
   margin: 0;
+  text-align: center;
 }
 /*SNS画像(アイコン)*/
 .sns {
@@ -459,6 +515,7 @@ dt {
   .aside {
     float: ""; /*←aside（サイドバー）はfloat:rightで右寄せに。*/ /*****************************/
     width: 100%;
+    border: 1px solid #ccc;
   }
   /*ナビゲーションバーの文字の大きさ*/
   .navTop {
@@ -510,7 +567,27 @@ dt {
     font-size: 25px;
     margin: 0;
   }
+  /*ダークモード*/
+  .dark {
+    margin-bottom: 350px;
+    font-size: 60px;
+    cursor: pointer;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 100;
+    background-color: black;
+    opacity: 0.8;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: none;
+    color: #fff;
+  }
   /*topにスクール*/
+  .fa-chevron-up:before {
+    font-size: 80px;
+  }
   .scroll-top {
     position: fixed;
     right: 20px;
@@ -519,10 +596,10 @@ dt {
     background-color: #999;
     opacity: 0.8;
     /*大きくする*/
-    width: 120px;
-    height: 120px;
+    width: 130px;
+    height: 130px;
     /*広告にかぶらないように*/
-    margin-bottom: 125px;
+    margin-bottom: 200px;
     border-radius: 50%;
     border: none;
     color: #fff;

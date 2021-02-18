@@ -76,6 +76,8 @@ $counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src=
 
 <link rel="icon" type="image/png" href="images/profile.jpg">
 
+<meta name="theme-color" content="#fff">
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4W0YW9MSGV"></script>
 <script>
@@ -102,7 +104,7 @@ $counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src=
 <meta name="twitter:description" content="😗< <?php print('見てね！'); ?>">
 
 <!-- jQuery-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
 <!--レスポンシブ-->
 <meta name="viewport" content="width=device-width">
@@ -113,6 +115,15 @@ $counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src=
 <![endif]-->
 </head>
 <body>
+<script>
+    //白い画面を見せない
+    var result = document.cookie.indexOf('dark');
+    if (result != -1) {
+        $("body").css({
+            backgroundColor: "black",
+        });
+    }
+</script>
 <header>
         <h1><a class="notext-decoration headerTitle" href="index.php">Blog</a><img class="topGif" src="images/<?php print($imgTop); ?>" alt="画像"></h1>
         <p class="headerSubTitle">うーたんのブログ</p>
@@ -204,7 +215,7 @@ if ($errer === 'blank'):
       </div>
       <div class="inline-block1">
         <!-- <img src="images/external_link.png" alt="画像" width="14%"> -->
-        <p class="sns_text">SNS</p>
+        <p class="sns_text"></p>
         <a href="https://twitter.com/uutan1108"><img class="sns" src="images/twitter.png" alt="画像"></a>
         <a href="https://github.com/OHMORIYUSUKE"><img class="sns" src="images/github.png" alt="画像"></a>
         <a href="mailto:b2190650@photon.chitose.ac.jp"><img class="sns" src="images/gmail.png" alt="画像"></a>
@@ -279,6 +290,7 @@ foreach($createds as $value):?>
 <?php endforeach; ?>
 </section>
 </aside>
+<button class="dark" onclick="dark();">🌙</button>
 <button class="scroll-top" id="js-button"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
 <footer>
     Copyright © 2021 Ohmori Yusuke Blog All Rights Reserved.
