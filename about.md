@@ -34,3 +34,14 @@
 
 << メインアカウント | VRC 用アカウント >>
 <a class="twitter-timeline" data-width="49%" data-height="500" data-theme="light" href="https://twitter.com/uutan1108?ref_src=twsrc%5Etfw">Tweets by u\__\_\_tan_</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><a class="twitter-timeline" data-width="49%" data-height="500" data-theme="light" href="https://twitter.com/rgSs28Q5ikifA0V?ref_src=twsrc%5Etfw">Tweets by rgSs28Q5ikifA0V</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+---
+
+> ### 注意事項
+
+> - 当ブログでは、Google アナリティクスを利用しています。  
+>   この Google アナリティクスはトラフィックデータの収集のためにクッキー(Cookie)を使用しております。トラフィックデータは匿名で収集されており、個人を特定するものではありません。
+
+> - 一部機能でクッキー(Cookie)を使用しているため、クッキー(Cookie)の使用が許可されていない場合は一部機能をご利用頂けません。
+
+> - スマートフォンの chrome 以外のブラウザでご覧の場合、不具合が生じます。

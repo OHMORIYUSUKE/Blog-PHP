@@ -185,7 +185,7 @@ function darkOff(){ //offの状態
     color: "",
   });
   $("h3").css({
-    color: "#fff",
+    color: "",
   });
   $("a").css({
     color: "",

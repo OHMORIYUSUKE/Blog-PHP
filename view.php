@@ -365,6 +365,8 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
     <button class="scroll-top" id="js-button"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
     <footer>
     Copyright © 2021 Ohmori Yusuke Blog All Rights Reserved.
+    <br>
+    当ブログでは、Googleアナリティクスを利用しています。
     </footer>
     <script src="app.js"></script>
     </body>
