@@ -33,7 +33,7 @@ $counter = str_pad($counter, 4, '0', STR_PAD_LEFT);
 //1桁ずつに分割
 $counter_array = str_split($counter);
 
-$counterImg = '<img src="images/7seg/'.$counter_array[0].'.png" alt=""><img src="images/7seg/'.$counter_array[1].'.png" alt=""><img src="images/7seg/'.$counter_array[2].'.png" alt=""><img src="images/7seg/'.$counter_array[3].'.png" alt="">';
+$counterImg = '<img class="counter" src="images/7seg/'.$counter_array[0].'.png" alt="'.$counter_array[0].'"><img class="counter" src="images/7seg/'.$counter_array[1].'.png" alt="'.$counter_array[1].'"><img class="counter" src="images/7seg/'.$counter_array[2].'.png" alt="'.$counter_array[2].'"><img class="counter" src="images/7seg/'.$counter_array[3].'.png" alt="'.$counter_array[3].'">';
 
 
 //コメント投稿

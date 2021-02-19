@@ -138,8 +138,11 @@ function darkOn(){ //onの状態
   $("footer").css({
     color: "#fff",
   });
-  $("span").css({
+  $(".tag").css({
     color: "#fff",
+  });//border: 1.6px solid #999;//.hljs border: solid 1.3px #ccc;
+  $(".hljs").css({
+    border: "solid 1.3px #fff",
   });
   $("body").css({
     backgroundColor: "black",
@@ -196,7 +199,7 @@ function darkOff(){ //offの状態
   $("dt").css({
     color: "",
   });
-  $("span").css({
+  $(".tag").css({
     color: "",
   });
   $("footer").css({
