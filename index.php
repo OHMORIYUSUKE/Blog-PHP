@@ -134,9 +134,15 @@ $counterImg = '<img class="counter" src="images/7seg/'.$counter_array[0].'.png" 
         <div class="inline-block">
         <p class="time"><?php print(htmlspecialchars($date, ENT_QUOTES)); ?></p>
       </div>
+      <?php 
+      $tags = preg_split("/[\s,]+/", $post['tag']);
+      //print_r($keywords);
+      foreach($tags as $tag):
+      ?>
       <div class="inline-block">
-        <a href="searchTag.php?searchTag=<?php print($post['tag']);?>" class="tag"><?php print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); ?></a>
+        <a href="searchTag.php?searchTag=<?php print($tag);?>" class="tag"><?php print('#'.htmlspecialchars($tag, ENT_QUOTES)); ?></a>
       </div>
+      <?php endforeach; ?>
     </section>
 <?php endforeach; ?>
 <nav aria-label="Page navigation example">
@@ -194,12 +200,24 @@ $counterImg = '<img class="counter" src="images/7seg/'.$counter_array[0].'.png" 
 <?php
 $tags = $db->query('SELECT DISTINCT tag FROM article');
 $tags->execute();
+$tagsArry = array(); //空の配列
 foreach($tags as $tag):
-?>
+  // $tagSpritは配列
+  $tagSprit = preg_split("/[\s,]+/", $tag['tag']);//データベースすべてのタグをスプリット
+  foreach($tagSprit as $item):
+    //スプリットしたタグを配列に入れていく
+    array_push($tagsArry,$item);
+  endforeach;
+endforeach; 
+//タグが重複しているため削除
+$tagsArry = array_unique($tagsArry);
+//文字数順にソート
+array_multisort( array_map( "strlen", $tagsArry), SORT_ASC, $tagsArry ) ;
 
-<a href="searchTag.php?searchTag=<?php print(htmlspecialchars($tag['tag'], ENT_QUOTES)); ?>" class="tag tagSide"><?php print('#'.htmlspecialchars($tag['tag'], ENT_QUOTES)); ?></a>
-
+foreach($tagsArry as $tag):?>
+  <a href="searchTag.php?searchTag=<?php print(htmlspecialchars($tag, ENT_QUOTES)); ?>" class="tag tagSide"><?php print('#'.htmlspecialchars($tag, ENT_QUOTES)); ?></a>
 <?php endforeach; ?>
+
 
 </section>
 <section class="box2">

@@ -36,10 +36,11 @@ text-align: center;
 }
 /*コード欄を丸くする*/
 .hljs {
-  border-radius: 0.8rem;
+  border-radius: 1.2rem;
+  font-weight: bold;
 }
 img {
-  border-radius: 0.8rem;
+  border-radius: 1.2rem;
 }
 .counter {
   border-radius: 0;
@@ -134,7 +135,7 @@ footer {
   border: 1px solid #ccc; /*←各ブロックに枠線をつけてわかりやすくしました。*/
   margin: 0px 0px 10px;
   padding: 20px;
-  border-radius: 0.8rem;
+  border-radius: 1rem;
 }
 header {
   text-align: center;
@@ -247,18 +248,23 @@ th {
 .tag {
   font-size: 0.9rem;
   text-align: right;
-  margin: 0 !important;
+  margin-top: 4px;
   padding-right: 5px;
   padding-left: 5px;
   padding-top: 2.5px;
   padding-bottom: 2.5px;
-  border: solid 1.3px #ccc;
+  border: solid 1.3px rgb(124, 124, 124);
   display: inline-block;
   border-radius: 0.2rem;
   text-decoration: none;
   color: black;
   /*改行させない*/
   white-space: nowrap;
+}
+/*view.phpのtopタグ*/
+.tagView {
+  margin-right: 4px;
+  margin-bottom: 4px;
 }
 /*サイドバーのタグ*/
 .tagSide {
@@ -378,6 +384,7 @@ dt {
 .commentImage {
   width: 8.8%;
   vertical-align: middle;
+  border-radius: 50%;
 }
 .comment {
   font-size: 22px;
@@ -545,7 +552,7 @@ dt {
   }
   /*サイドバーのタグ*/
   .tagSide {
-    margin-right: 10px !important;
+    margin-right: 5px !important;
     padding-right: 10px !important;
     padding-left: 10px !important;
   }

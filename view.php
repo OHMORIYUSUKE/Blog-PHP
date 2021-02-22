@@ -202,9 +202,16 @@ print(htmlspecialchars($date, ENT_QUOTES));
 <h1 class="title"><?php //print($title); 
 print(htmlspecialchars($post['title'], ENT_QUOTES)); 
 ?></h1>
-<a href="searchTag.php?searchTag=<?php print($post['tag']);?>" class="tag"><?php //print($tag); 
-print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); 
-?></a>
+
+<?php 
+$tags = preg_split("/[\s,]+/", $post['tag']);
+//print_r($keywords);
+?>
+
+<?php foreach($tags as $tag): ?>
+<?php print('<a class="tag tagView" href="searchTag.php?searchTag='.$tag.'" class="tag text__icon">#'.$tag.'</a>'); ?>
+<?php endforeach; ?>
+
 
 <?php //内容
 //print($text); 
@@ -302,12 +309,23 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
     <?php
     $tags = $db->query('SELECT DISTINCT tag FROM article');
     $tags->execute();
+    $tagsArry = array(); //空の配列
     foreach($tags as $tag):
-    ?>
-
-        <a href="searchTag.php?searchTag=<?php print(htmlspecialchars($tag['tag'], ENT_QUOTES)); ?>" class="tag tagSide"><?php print('#'.htmlspecialchars($tag['tag'], ENT_QUOTES)); ?></a>
-
+      // $tagSpritは配列
+      $tagSprit = preg_split("/[\s,]+/", $tag['tag']);//データベースすべてのタグをスプリット
+      foreach($tagSprit as $item):
+        //スプリットしたタグを配列に入れていく
+        array_push($tagsArry,$item);
+      endforeach;
+    endforeach; 
+    //タグが重複しているため削除
+    $tagsArry = array_unique($tagsArry);
+    //文字数順にソート
+    array_multisort( array_map( "strlen", $tagsArry), SORT_ASC, $tagsArry ) ;
+    foreach($tagsArry as $tag):?>
+      <a href="searchTag.php?searchTag=<?php print(htmlspecialchars($tag, ENT_QUOTES)); ?>" class="tag tagSide"><?php print('#'.htmlspecialchars($tag, ENT_QUOTES)); ?></a>
     <?php endforeach; ?>
+
 
     </section>
     <section class="box2">

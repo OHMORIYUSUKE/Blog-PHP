@@ -103,6 +103,7 @@ padding: 0.5em;
 width: 100%;
 background-color: #DDDDDD;
 border: 1px dotted #666666;
+overflow-x: scroll;
 }
 </style>
 <header>
@@ -122,7 +123,7 @@ border: 1px dotted #666666;
 </nav>
 <article class="article">
   <p class="counter">記事の総数：<?php print($cnt['cnt']);?>件
-  <a href="https://node2.feed43.com/4081510646200330.xml">Feed43<img class="externalLink" src="images/external_link.png" alt="画像"></a>
+  <a href="https://node2.feed43.com/4081510646200330.xml">RSS配信を行っています(feed43)<img class="externalLink" src="images/external_link.png" alt="画像"></a>
   </p>
 <?php foreach($posts as $post): ?>
     <section>
@@ -137,9 +138,15 @@ border: 1px dotted #666666;
         <div class="inline-block">
         <p class="time"><?php print(htmlspecialchars($date, ENT_QUOTES)); ?></p>
       </div>
+      <?php 
+      $tags = preg_split("/[\s,]+/", $post['tag']);
+      //print_r($keywords);
+      foreach($tags as $tag):
+      ?>
       <div class="inline-block">
-        <a href="searchTag.php?searchTag=<?php print($post['tag']);?>" class="tag"><?php print('#'.htmlspecialchars($post['tag'], ENT_QUOTES)); ?></a>
+        <a href="searchTag.php?searchTag=<?php print($tag);?>" class="tag"><?php print('#'.htmlspecialchars($tag, ENT_QUOTES)); ?></a>
       </div>
+      <?php endforeach; ?>
       <div>
       <?php
         $html=md2html($post['text']);
@@ -169,18 +176,29 @@ border: 1px dotted #666666;
     <!-- 検索ボックス -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-<section class="box2">
+    <section class="box2">
 <h1 class="sideTitle">カテゴリー</h1>
 <hr>
 <?php
 $tags = $db->query('SELECT DISTINCT tag FROM article');
 $tags->execute();
+$tagsArry = array(); //空の配列
 foreach($tags as $tag):
-?>
-
-<a href="searchTag.php?searchTag=<?php print(htmlspecialchars($tag['tag'], ENT_QUOTES)); ?>" class="tag tagSide"><?php print('#'.htmlspecialchars($tag['tag'], ENT_QUOTES)); ?></a>
-
+  // $tagSpritは配列
+  $tagSprit = preg_split("/[\s,]+/", $tag['tag']);//データベースすべてのタグをスプリット
+  foreach($tagSprit as $item):
+    //スプリットしたタグを配列に入れていく
+    array_push($tagsArry,$item);
+  endforeach;
+endforeach; 
+//タグが重複しているため削除
+$tagsArry = array_unique($tagsArry);
+//文字数順にソート
+array_multisort( array_map( "strlen", $tagsArry), SORT_ASC, $tagsArry ) ;
+foreach($tagsArry as $tag):?>
+  <a href="searchTag.php?searchTag=<?php print(htmlspecialchars($tag, ENT_QUOTES)); ?>" class="tag tagSide"><?php print('#'.htmlspecialchars($tag, ENT_QUOTES)); ?></a>
 <?php endforeach; ?>
+
 
 </section>
 <section class="box2">
