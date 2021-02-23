@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 require('dbconnect.php');
 //コメント投稿
 //if 投稿するボタンが押されたとき
@@ -104,7 +105,7 @@ $counterImg = '<img class="counter" src="images/7seg/'.$counter_array[0].'.png" 
         <meta name="twitter:site" content="http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>">
         <meta name="twitter:image" content="http://utan.php.xdomain.jp/blog/<?php print($newfile); ?>" />
         <meta name="twitter:title" content="うーたんのブログ">
-        <meta name="twitter:description" content="😗< <?php print('【#'.$post['tag'].'】'.$post['title']); ?>">
+        <meta name="twitter:description" content="😗< <?php print( $post['title']); ?>">
 
         <link rel="stylesheet" type="text/css" href="main.css" media="all">
         
@@ -230,44 +231,50 @@ print(htmlspecialchars($post['text'], ENT_QUOTES));
 <?php endif; ?>
 </div>
 <br>
-<?php //SNS共有ボタン ?>
+<?php //SNS共有ボタン 
+if($noArticle == 0):
+?>
 <ul class="shareSns">
     <li><a class="twitter" href="http://twitter.com/share?text=うーたんのブログ【<?php print($post['title']); ?>】&hashtags=ブログ,<?php print($post['tag']); ?>&url=http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>" rel="nofollow">Tweet</a></li>
     <li><a class="facebook" href="http://www.facebook.com/share.php?u=http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>" >Facebook</a></li>
     <li><a class="getpocket" href="http://getpocket.com/edit?url=http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>" rel="nofollow">Pocket</a></li>
     <li><a class="line" href="https://social-plugins.line.me/lineit/share?url=http://utan.php.xdomain.jp/blog/view.php?id=<?php print($_REQUEST['id']); ?>">LINE</a></li>
 </ul>
+<?php endif; ?>
 
 <p class="toTop">&laquo; <a href="index.php">メインページへ</a></p>
+<!-- idが不正の時はコメント入力欄を表示しない
+記事があるときは0
+ -->
+<?php if($noArticle == 0): ?>
+  <p class="commentTitle"><img class="commentTitleImage" src="images/comment.png" alt="画像"> コメント</p>
 
-<p class="commentTitle"><img class="commentTitleImage" src="images/comment.png" alt="画像"> コメント</p>
-
-<form action="" method="post">
-      <dl>
-        <dt class="commentInputNameTitle">お名前</dt>
-		<dd>
-        	<input class="commentInputName" type="text" name="name" maxlength="20"/>
-		</dd>
-        <?php
-		if ($errer['name'] === 'blank'):
-		?>
-		<p class="error">*お名前を入力してください。</p>
-		<?php endif;?>
-        <dt class="commentInputCommentTitle">コメント</dt>
-        <dd>
-          <textarea class="textCommentlines" name="comment"></textarea>
-        </dd>
-        <?php
-		if ($errer['comment'] === 'blank'):
-		?>
-		<p class="error">*コメントを入力してください。</p>
-		<?php endif;?>
-      </dl>    
-        <p>
-          <input class="toukou" type="submit" value="投稿する" />
-        </p>     
-    </form>
-
+  <form action="" method="post">
+        <dl>
+          <dt class="commentInputNameTitle">お名前</dt>
+      <dd>
+            <input class="commentInputName" type="text" name="name" maxlength="20"/>
+      </dd>
+          <?php
+      if ($errer['name'] === 'blank'):
+      ?>
+      <p class="error">*お名前を入力してください。</p>
+      <?php endif;?>
+          <dt class="commentInputCommentTitle">コメント</dt>
+          <dd>
+            <textarea class="textCommentlines" name="comment"></textarea>
+          </dd>
+          <?php
+      if ($errer['comment'] === 'blank'):
+      ?>
+      <p class="error">*コメントを入力してください。</p>
+      <?php endif;?>
+        </dl>    
+          <p>
+            <input class="toukou" type="submit" value="投稿する" />
+          </p>     
+      </form>
+<?php endif; ?>
     <?php //コメント表示 ?>
     <?php foreach($comments as $comment): ?>
     <?php 
