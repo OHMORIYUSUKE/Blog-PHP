@@ -265,10 +265,15 @@ $createds = array();
 <?php endforeach; ?>
 <?php
 $createds = array_unique($createds);
+?>
 
-foreach($createds as $value):?>
-  <a class="tag tagSide" href="searchArchive.php?searchArchive=<?php print($value); ?>"><?php print($value); ?></a>
+<select class="pullarchive" name="select" onChange="location.href=value;">
+<option value="#">選択してください</option>
+<?php foreach($createds as $value):?>
+  <option value="searchArchive.php?searchArchive=<?php print($value); ?>"><?php print($value); ?></option>
 <?php endforeach; ?>
+</select>
+
 </section>
 </aside>
 <button class="dark" onclick="dark();">🌙</button>

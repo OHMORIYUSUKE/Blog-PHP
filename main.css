@@ -34,10 +34,14 @@ text-align: center;
   content: "\f102" !important;
   font-size: 40px;
 }
+/*アーカイブのタブ*/
+.pullarchive {
+  width: 100%;
+}
+
 /*コード欄を丸くする*/
 .hljs {
   border-radius: 1.2rem;
-  font-weight: bold;
 }
 img {
   border-radius: 1.2rem;
@@ -438,6 +442,10 @@ dt {
   .pagination {
     font-size: 25px;
   }
+  /*アーカイブのタブ*/
+  .pullarchive {
+    font-size: 30px;
+  }
   /*　画面サイズが480px以下の場合ここの記述が適用される　*/
   /*検索窓*/
   .search_container input[type="text"] {
@@ -544,7 +552,7 @@ dt {
   }
   /*記事欄のタグの文字の大きさ*/
   .tag {
-    font-size: 25px;
+    font-size: 28px;
   }
   /*投稿時間*/
   .time {
@@ -555,12 +563,13 @@ dt {
     margin-right: 5px !important;
     padding-right: 10px !important;
     padding-left: 10px !important;
+    font-size: 25px;
   }
   /*最新記事のタイトルの大きさ*/
   .view_title {
     margin-top: 3px;
     margin-bottom: 3px;
-    font-size: 22px;
+    font-size: 26px;
     padding-top: 20px !important;
     padding-bottom: 20px !important;
   }

@@ -65,7 +65,8 @@ function dark() {
   console.log("off");
   flag = 1;
  }else{ //ダークモードオン
-  document.cookie = 'dark=on; max-age=3600'; //クッキーの保存時間(60分)
+  const time = 60*60*24; //クッキーの保存時間(1日)
+  document.cookie = 'dark=on; max-age='+time;
   //console.log(document.cookie);
   //window.alert("on");
   console.log("on");
@@ -140,9 +141,11 @@ function darkOn(){ //onの状態
   });
   $(".tag").css({
     color: "#fff",
+    border: "1px solid #cacaca",
   });//border: 1.6px solid #999;//.hljs border: solid 1.3px #ccc;
   $(".hljs").css({
     border: "solid 1.3px #fff",
+    backgroundColor: "#1D1F21",
   });
   $("body").css({
     backgroundColor: "black",
@@ -150,6 +153,10 @@ function darkOn(){ //onの状態
 }
 
 function darkOff(){ //offの状態
+  $(".hljs").css({
+    border: "",
+    backgroundColor: "",
+  });
   $("meta").css({
     content: "",
   });
@@ -201,6 +208,7 @@ function darkOff(){ //offの状態
   });
   $(".tag").css({
     color: "",
+    border: "",
   });
   $("footer").css({
     color: "",
