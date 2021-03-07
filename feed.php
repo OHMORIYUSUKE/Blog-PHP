@@ -1,4 +1,5 @@
 <?php
+//https://node2.feed43.com/4081510646200330.xml
 require('counter.php');
 error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 ?>
@@ -123,7 +124,7 @@ overflow-x: scroll;
 </nav>
 <article class="article">
   <p class="counter">記事の総数：<?php print($cnt['cnt']);?>件
-  <a href="https://node2.feed43.com/4081510646200330.xml">RSS配信を行っています(feed43)<img class="externalLink" src="images/external_link.png" alt="画像"></a>
+  <a href="http://utan.php.xdomain.jp/blog/rss.xml">RSS配信を行っています<img class="externalLink" src="images/external_link.png" alt="画像"></a>
   </p>
 <?php foreach($posts as $post): ?>
     <section>

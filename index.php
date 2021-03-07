@@ -7,6 +7,8 @@ error_reporting(E_ALL & ~ E_DEPRECATED & ~ E_USER_DEPRECATED & ~ E_NOTICE);
 require('dbconnect.php');
 require('hour.php');
 require('geneOGPindex.php');
+//Rssを更新させる
+require('rssFeed.php');
 
 //URLパラメータで渡ってきたpage
 $page = $_REQUEST['page'];
