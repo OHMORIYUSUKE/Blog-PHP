@@ -8,7 +8,7 @@ require('dbconnect.php');
 require('hour.php');
 require('geneOGPindex.php');
 //Rssを更新させる
-require('rssFeed.php');
+require('geneXML.php');
 
 //URLパラメータで渡ってきたpage
 $page = $_REQUEST['page'];
