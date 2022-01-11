@@ -15,4 +15,3 @@ if($hour<=4 && $hour>=0){
 //12時から20時まではペンギン
   $imgTop = "pengin.gif";
 }
-?>

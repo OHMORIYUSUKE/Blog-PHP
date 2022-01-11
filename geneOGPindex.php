@@ -71,5 +71,3 @@ function OGPindex($counter,$cnt) {
 
 	return($newfile);
 }
-?>
-

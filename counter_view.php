@@ -34,5 +34,3 @@ if($flag == 1){
     ));
     $post = $posts->fetch();
 }
-
-?>

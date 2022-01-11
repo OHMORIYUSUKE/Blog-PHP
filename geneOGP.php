@@ -82,5 +82,3 @@ function OGP($id) {
 		//doNothing
 	}
 }
-?>
-

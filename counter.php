@@ -20,4 +20,3 @@ $fp = fopen($counter_file, 'r+');
     }
 
 fclose ($fp);
-?>

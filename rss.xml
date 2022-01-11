@@ -8,7 +8,7 @@
 <link>https://github.com/OHMORIYUSUKE/Blog-PHP/blob/master/images/profile.jpg?raw=true</link>
 <url>うーたんのブログ</url>
 </image>
-<lastBuildDate>Tue, 04 May 2021 18:11:12 +0900</lastBuildDate>
+<lastBuildDate>Tue, 11 Jan 2022 18:16:46 +0900</lastBuildDate>
 <language>ja-JP</language>
 <pubDate>Sun, 07 Mar 2021 00:00:00 +0900</pubDate>
 <category>Blog</category>
@@ -21,9 +21,82 @@
 <item>
 <title>aaa</title>
 <link>http://utan.php.xdomain.jp/blog/view.php?id=29</link>
-<description><![CDATA[<pre><code>&lt;script&gt;
-window.alert("AAA")
-&lt;/script&gt;</code></pre>]]></description>
+<description><![CDATA[<h2>OGP 画像を PHP で動的に生成できるようにしました！！</h2>
+<p>↓ こんな感じです。</p>
+<img src="https://drive.google.com/uc?id=1qiFuM2g9Fnq6KaK1AE4fI3Ke7bZ6t35x" width="100%">
+<p>画像に文字を書くには以下のコードで実装しました。<br />
+引数で<code>$title</code>(記事のタイトル)を渡すと、生成した画像のファイルパスを返すようにしました。<code>return($newfile);</code></p>
+<pre><code class="language-PHP">&lt;?php
+function OGP($title) {
+    $title = $title;
+    // 文字列を挿入する先の画像
+    $file = "OGP.jpg";
+
+    // 出力後のファイル名
+    $newfile = "OGPout/".$title."OGP.jpg";
+
+    // コピー先画像作成
+    $image = imagecreatefromjpeg($file);
+
+    // 挿入する文字列
+    $text = $title;
+
+    //RSS_Feed配信を開始しました
+    //このブログサイトについて
+    //コメント機能を実装できませんでした。
+    //レスポンシブにしました
+    //今年の振り返りと来年への抱負-2020-
+
+    //見た目の長さ 半角1全角2
+    $textLength = mb_strwidth($text);
+
+    $textWdth = $textLength*32;
+    //中央に文字列が来るように調整
+
+    $xp = 620 - ($textWdth / 2);
+
+    // 挿入する文字列のフォント
+    $fontfile = "arial.ttf";
+
+    // 挿入する文字列の色(白)
+    $color = imagecolorallocate($image, 0, 181, 253);//0, 181, 253
+
+    // 挿入する文字列のサイズ(ピクセル)
+    $size = 50;
+
+    // 挿入する文字列の角度
+    $angle = 0;
+
+    // 挿入位置
+    $x = $xp;         // 左からの座標(ピクセル)620が中央半角32px=64/2
+    $y = 300 + $size; // 上からの座標(ピクセル)
+
+
+    // 文字列挿入
+    imagettftext(
+        $image,     // 挿入先の画像
+        $size,      // フォントサイズ
+        $angle,     // 文字の角度
+        $x,         // 挿入位置 x 座標
+        $y,         // 挿入位置 y 座標
+        $color,     // 文字の色
+        $fontfile,  // フォントファイル
+        $text
+    );     // 挿入文字列
+
+    // ファイル名を指定して画像出力
+    imagejpeg($image, $newfile);
+
+    return($newfile);
+}
+?&gt;</code></pre>
+<p>この関数を view.php で呼ぶことで、閲覧された時点で毎回画像を生成するようにしました。</p>
+<pre><code class="language-PHP">//OGPを生成
+$newfile = OGP($post["title"]);</code></pre>
+<p>↓ 生成された画像がレンタルサーバーに保存されています。<br />
+文字化けしていますが。</p>
+<img src="https://github.com/OHMORIYUSUKE/Blog-PHP/blob/master/article/images/OGP%E7%94%BB%E5%83%8F%E3%82%92%E5%8B%95%E7%9A%84%E3%81%AB%E7%94%9F%E6%88%90%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/PHP16.png?raw=true" width="100%">
+<p>無料レンタルサーバーの使える機能を最大限に使っていきたい。</p>]]></description>
 <pubDate>Sun, 21 Feb 2021 23:40:00 +0900</pubDate>
 </item>
 <item>
@@ -271,7 +344,59 @@ function scrollTop(elem,duration) {
 <item>
 <title>タグのテスト</title>
 <link>http://utan.php.xdomain.jp/blog/view.php?id=27</link>
-<description><![CDATA[<h2>複数タグのテスト</h2>]]></description>
+<description><![CDATA[<p>2021-02-18 (更新)</p>
+<h2>大森裕介です。</h2>
+<p>生年月日：2000 年 11 月 8 日
+出身：栃木県
+大学：公立千歳科学技術大学
+学科：情報システム工学科
+ポートフォリオサイト：<a href="http://utan.php.xdomain.jp/">リンク</a>
+サークル：<a href="https://cist-lt-group.web.app/">cistLT サークル</a>
+趣味：アニメを見ること。VRC をたまにすること。Blender とかも、</p>
+<h2>github の活動履歴</h2>
+<img src="https://raw.githubusercontent.com/OHMORIYUSUKE/OHMORIYUSUKE/main/profile-summary-card-output/vue/3-stats.svg" width="25%"><img src="https://raw.githubusercontent.com/OHMORIYUSUKE/OHMORIYUSUKE/main/profile-summary-card-output/vue/0-profile-details.svg" width="75%">
+<img src="https://raw.githubusercontent.com/OHMORIYUSUKE/OHMORIYUSUKE/main/profile-summary-card-output/vue/1-repos-per-language.svg" width="50%"><img src="https://raw.githubusercontent.com/OHMORIYUSUKE/OHMORIYUSUKE/main/profile-summary-card-output/vue/2-most-commit-language.svg" width="50%">
+<h2>外部のブログ(はてなブログ)</h2>
+<ul>
+<li><a href="https://uu-tan.hatenablog.jp/entry/2020/12/28/225843">今年の振り返りと来年への抱負</a></li>
+<li><a href="https://uu-tan.hatenablog.jp/entry/2020/12/25/225630">簡単に Python でアプリケーションを作ろう</a></li>
+<li><a href="https://uu-tan.hatenablog.jp/entry/2020/12/11/222753">Python を触ってみた</a></li>
+<li><a href="https://uu-tan.hatenablog.jp/entry/2020/11/11/110015">おすすめアニメ【笑えるアニメランキング】</a></li>
+<li><a href="https://uu-tan.hatenablog.jp/entry/2020/11/10/234657">おすすめアニメ【感動するアニメランキング】</a></li>
+<li><a href="https://uu-tan.hatenablog.jp/entry/2020/11/05/184728">うーたんの自己紹介</a></li>
+</ul>
+<h2>Blender で作ったもの</h2>
+<div class="youtube">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UdRkqjRtTc0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<h2>Twitter</h2>
+<p>&lt;&lt; メインアカウント | VRC 用アカウント &gt;&gt;
+<a class="twitter-timeline" data-width="49%" data-height="500" data-theme="light" href="https://twitter.com/uutan1108?ref_src=twsrc%5Etfw">Tweets by u_<em>__tan</em></a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><a class="twitter-timeline" data-width="49%" data-height="500" data-theme="light" href="https://twitter.com/rgSs28Q5ikifA0V?ref_src=twsrc%5Etfw">Tweets by rgSs28Q5ikifA0V</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+<hr />
+<blockquote>
+<h3>注意事項</h3>
+</blockquote>
+<blockquote>
+<ul>
+<li>当ブログでは、Google アナリティクスを利用しています。<br />
+この Google アナリティクスはトラフィックデータの収集のためにクッキー(Cookie)を使用しております。トラフィックデータは匿名で収集されており、個人を特定するものではありません。</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>一部機能でクッキー(Cookie)を使用しているため、クッキー(Cookie)の使用が許可されていない場合は一部機能をご利用頂けません。</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>スマートフォンの chrome 以外のブラウザでご覧の場合、不具合が生じます。</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>スマートフォンでアクセスした際に表示されるバナーはレンタルサーバー側で表示しているものです。Google AdSense ではありません。</li>
+</ul>
+</blockquote>]]></description>
 <pubDate>Sun, 21 Feb 2021 22:38:46 +0900</pubDate>
 </item>
 <item>
@@ -358,7 +483,209 @@ function scrollTop(elem,duration) {
 <item>
 <title>閲覧回数を計測しています</title>
 <link>http://utan.php.xdomain.jp/blog/view.php?id=23</link>
-<description><![CDATA[]]></description>
+<description><![CDATA[<h2>jQuery を用いてダークモードを実装しました。</h2>
+<p>最初は js のライブラリである<a href="https://darkmodejs.learn.uno/">Darkmode.Js</a>を用いて実装しようとしましたが、他の js ライブラリと干渉してしまい導入を断念しました。(単純に楽しようとしました。)</p>
+<p>そこで、自分で納得できるロジックでダークモードを実装することにしました。</p>
+<pre><code class="language-JavaScript">//dom構築が終わる前にjQueryを実行するとバグる
+window.onload = function () {
+  // ここに読み込み完了時に実行してほしい内容を書く。
+  var result = document.cookie.indexOf('dark');
+  if(result == -1){ //ダークモードオフ
+    //window.alert("ダークモードoff");
+    darkOff();
+  }else{
+    //window.alert("ダークモードon");
+    darkOn();
+  }
+  };
+
+//ダークモード
+//onの時はクッキーあり(作る)
+//offの時はクッキーなし(削除)
+var i = 1;
+
+var result = document.cookie.indexOf('dark');
+if (result == -1) {
+  i = 2;
+}
+//ボタンが押されるたびに実行される---------------------------------------------------------
+function dark() {
+ var flag = i%2;
+ if(flag == 1){ //ダークモードオフ
+  document.cookie = 'dark=on; max-age=0';
+  //console.log(document.cookie);
+  //window.alert("off");
+  console.log("off");
+  flag = 1;
+ }else{ //ダークモードオン
+  document.cookie = 'dark=on; max-age=3600'; //クッキーの保存時間(60分)
+  //console.log(document.cookie);
+  //window.alert("on");
+  console.log("on");
+  flag = 0;
+ }
+ //var result = document.cookie.indexOf('dark');
+ //window.alert(result);//ダークモードoffの時に-1を返す
+ if(flag == 1){ //ダークモードオフ
+  //window.alert("off");
+  darkOff();
+ }else if(flag == 0){ //ダークモードオン
+   //window.alert("on関数内");
+   darkOn();
+ }
+ i+=1;
+}</code></pre>
+<p>コードは上記の通りです。</p>
+<pre><code class="language-JavaScript">window.onload = function () {
+  // ここに読み込み完了時(DOM構築後)に実行してほしい内容を書く。
+  var result = document.cookie.indexOf('dark');
+  if(result == -1){ //ダークモードオフ
+    //window.alert("ダークモードoff");
+    darkOff();
+  }else{ //ダークモードオン
+    //window.alert("ダークモードon");
+    darkOn();
+  }
+  };</code></pre>
+<p>まず、DOM 構築が完了したら、cookie の状態を見ます。この cookie はダークモードの状態か、そうでないかを保存しておくものです。<br />
+(cookie があればダークモード、無ければライトモード)</p>
+<p><code>var result</code>には cookie が存在したら-1 以外が代入され、cookie が無ければ-1 が代入されます。</p>
+<pre><code class="language-JavaScript">var i = 1;
+
+var result = document.cookie.indexOf('dark');
+if (result == -1) {
+  i = 2;
+}
+//ボタンが押されるたびに実行される---------------------------------------------------------
+function dark() {
+ var flag = i%2;
+ if(flag == 1){ //ダークモードオフ
+  document.cookie = 'dark=on; max-age=0';
+  //console.log(document.cookie);
+  //window.alert("off");
+  console.log("off");
+  flag = 1;
+ }else{ //ダークモードオン
+  document.cookie = 'dark=on; max-age=3600'; //クッキーの保存時間(60分)
+  //console.log(document.cookie);
+  //window.alert("on");
+  console.log("on");
+  flag = 0;
+ }
+ //var result = document.cookie.indexOf('dark');
+ //window.alert(result);//ダークモードoffの時に-1を返す
+ if(flag == 1){ //ダークモードオフ
+  //window.alert("off");
+  darkOff();
+ }else if(flag == 0){ //ダークモードオン
+   //window.alert("on関数内");
+   darkOn();
+ }
+ i+=1;
+}</code></pre>
+<p>ページが読み込みが行われたときに<code>var i = 1;</code>となり、</p>
+<pre><code class="language-JavaScript">var result = document.cookie.indexOf('dark');
+if (result == -1) {
+  i = 2;
+}</code></pre>
+<p>前のページでダークモードだったとき(cookie に保存されていた時)は、<code>var i = 2;</code>とします。<br />
+(前のページがライトモードの時は、<code>var i = 1;</code>です。)</p>
+<pre><code class="language-JavaScript">var flag = i%2;</code></pre>
+<p>そうすることで、前のページでダークモードだったときは<code>flag = 0</code>ライトモードの時は<code>flag = 1</code>になります。</p>
+<p>その後は、ボタンが押されるたびに<code>i+=1;</code>され、flag は 0,1 を交互に変化します。(ダークモードとライトモードを行き来する)</p>
+<p>変化するたびに、</p>
+<pre><code class="language-JavaScript">if(flag == 1){ //ダークモードオフ
+  document.cookie = 'dark=on; max-age=0';
+  //console.log(document.cookie);
+  //window.alert("off");
+  console.log("off");
+  flag = 1;
+ }else{ //ダークモードオン
+  document.cookie = 'dark=on; max-age=3600'; //クッキーの保存時間(60分)
+  //console.log(document.cookie);
+  //window.alert("on");
+  console.log("on");
+  flag = 0;
+ }</code></pre>
+<p>のコードで cookie を生成したり削除したりしています。</p>
+<pre><code class="language-JavaScript">darkOff();
+darkOn();</code></pre>
+<p>にはダークモードオンの時の状態の CSS とオフの状態の CSS をそれぞれ書いてください。</p>
+<p>ちなみに私は以下のようにしました。</p>
+<pre><code class="language-JavaScript">function darkOn(){ //onの状態
+  $("td").css({
+    color: "#fff",
+  });
+   $("p").css({
+    color: "#fff",
+  });
+  $("h1").css({
+    color: "#fff",
+  });
+  $("h2").css({
+    color: "#fff",
+  });
+  $("h3").css({
+    color: "#fff",
+  });
+  $("a").css({
+    color: "#fff",
+  });
+  $("li").css({
+    color: "#fff",
+  });
+  $("dt").css({
+    color: "#fff",
+  });
+  $("footer").css({
+    color: "#fff",
+  });
+  $("span").css({
+    color: "#fff",
+  });
+  $("body").css({
+    backgroundColor: "black",
+  });
+}
+
+function darkOff(){ //offの状態
+  $("td").css({
+    color: "",
+  });
+  $("p").css({
+    color: "",
+  });
+  $("h1").css({
+    color: "",
+  });
+  $("h2").css({
+    color: "",
+  });
+  $("h3").css({
+    color: "",
+  });
+  $("a").css({
+    color: "",
+  });
+  $("li").css({
+    color: "",
+  });
+  $("dt").css({
+    color: "",
+  });
+  $("span").css({
+    color: "",
+  });
+  $("footer").css({
+    color: "",
+  });
+  $("body").css({
+    backgroundColor: "",
+  });
+}
+</code></pre>
+<p>この方法なら細かく CSS を変更できるので満足しています。</p>
+<p>これでもコードをきれいにしたつもりです。</p>]]></description>
 <pubDate>Mon, 08 Feb 2021 18:51:53 +0900</pubDate>
 </item>
 <item>

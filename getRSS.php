@@ -4,5 +4,3 @@ $homepage = file_get_contents('rss.xml');
 
 $homepageAsXML = new SimpleXMLElement($homepage);
 echo $homepageAsXML->asXML();
-
-?>
