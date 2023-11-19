@@ -1,7 +1,0 @@
-https://node2.feed43.com/7507481832867388.xml
-
-https://node2.feed43.com/4081510646200330.xml <=
-
-
-GRANT ALL ON utan_blog.comments TO 'utan_bloguser'@'mysql1.php.xdomain.ne.jp' IDENTIFIED BY 'bloguserpass';
-FLUSH PRIVILEGES;
